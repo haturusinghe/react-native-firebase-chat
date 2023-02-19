@@ -10,6 +10,7 @@ import {Text, View} from 'react-native';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {LoginPage} from './src/screens/LoginPage';
 
 function HomeScreen() {
   return (
@@ -24,8 +25,9 @@ const Stack = createNativeStackNavigator();
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
