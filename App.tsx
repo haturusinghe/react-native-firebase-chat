@@ -27,7 +27,11 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

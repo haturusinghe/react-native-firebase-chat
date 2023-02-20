@@ -16,6 +16,8 @@ import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
 import {Button, Icon} from 'react-native-elements';
+import {Image} from 'react-native';
+import {styles} from './style';
 
 interface LoginType {
   email: string;
@@ -35,9 +37,9 @@ export const LoginPage = () => {
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
 
   return (
-    <SafeAreaView style={{flex: 1}} testID="sign-in">
+    <SafeAreaView style={{flex: 1}}>
       <StatusBar backgroundColor={colors.primary} barStyle={'light-content'} />
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={styles.scrollview}>
         <View>
           <KeyboardAvoidingView
             style={{
@@ -46,6 +48,10 @@ export const LoginPage = () => {
               borderRadius: 10,
               // height: maskHeight,
             }}>
+            <Image
+              source={require('../../assets/images/LOGO.png')}
+              style={styles.image}
+            />
             <Formik
               validationSchema={loginValidationSchema}
               initialValues={{email: '', password: ''}}
@@ -161,10 +167,3 @@ export const LoginPage = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  textType: {
-    fontFamily: 'Manrope-Medium',
-    fontSize: 14,
-  },
-});
