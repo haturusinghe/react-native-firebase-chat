@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../constants';
 
 export const styles = StyleSheet.create({
   image: {
@@ -15,6 +16,11 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     marginTop: 30,
-    bottom: 20,
+  },
+  intro: {
+    fontSize: 15,
+    marginVertical: 30,
+    fontWeight: '400',
+    color: colors.black,
   },
 });

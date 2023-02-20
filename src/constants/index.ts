@@ -3,6 +3,7 @@ export const colors = {
   grey: 'grey',
   error: 'red',
   white: 'white',
+  black: 'black',
 };
 
 export const routes = {

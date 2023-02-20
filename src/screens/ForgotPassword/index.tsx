@@ -50,6 +50,10 @@ export const ForgotPasswordPage = () => {
               source={require('../../assets/images/LOGO.png')}
               style={styles.image}
             />
+            <Text style={styles.intro}>
+              Enter the email address assiciated with your account and we'll
+              send you a link to reset the password.
+            </Text>
             <Formik
               validationSchema={forgotpasswordValidationSchema}
               initialValues={{email: '', password: ''}}
