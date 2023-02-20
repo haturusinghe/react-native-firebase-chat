@@ -9,4 +9,5 @@ export const routes = {
   home: 'Home',
   login: 'Login',
   signUp: 'SignUp',
+  forgotPassword: 'Forgot Password',
 };

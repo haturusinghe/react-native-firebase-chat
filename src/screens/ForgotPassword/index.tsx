@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import {Formik} from 'formik';
@@ -19,22 +20,20 @@ import {Button, CheckBox, Icon} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
 
-interface LoginType {
+interface forgotEmailType {
   email: string;
-  password: string;
 }
 
-const loginValidationSchema = yup.object().shape({
+const forgotpasswordValidationSchema = yup.object().shape({
   email: yup
     .string()
     .email('Badly formatted email')
     .required('Email is Required'),
-  password: yup.string().required('Password is Required'),
 });
 
-export const LoginPage = () => {
+export const ForgotPasswordPage = () => {
   const navigation = useNavigation();
-  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
+  const windowHeight = useWindowDimensions().height;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -53,13 +52,13 @@ export const LoginPage = () => {
               style={styles.image}
             />
             <Formik
-              validationSchema={loginValidationSchema}
+              validationSchema={forgotpasswordValidationSchema}
               initialValues={{email: '', password: ''}}
               validateOnChange={true}
               // onReset={(value: any)=> {console.log(value);
               //   email:"he"
               // }}
-              onSubmit={(values: LoginType, {resetForm}) => {}}>
+              onSubmit={(values: forgotEmailType, {resetForm}) => {}}>
               {({
                 handleChange,
                 handleBlur,
@@ -88,46 +87,11 @@ export const LoginPage = () => {
                         touched.email && errors.email ? errors.email : undefined
                       }
                     />
-                    <InputField
-                      onChangeText={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      autoCapitalize="none"
-                      rightIcon={() => (
-                        <Button
-                          icon={
-                            !passwordVisible
-                              ? {
-                                  type: 'ionicon',
-                                  name: 'eye-outline',
-                                  color: colors.grey,
-                                }
-                              : {
-                                  type: 'ionicon',
-                                  name: 'eye-off-outline',
-                                  color: colors.grey,
-                                }
-                          }
-                          type={'clear'}
-                          onPress={() => setPasswordVisible(!passwordVisible)}>
-                          <Icon name="save" color="white" />
-                        </Button>
-                      )}
-                      placeholder="Password"
-                      secureTextEntry={passwordVisible}
-                      value={values.password}
-                      editable={!isSubmitting}
-                      errorMessage={
-                        touched.password && errors.password
-                          ? errors.password
-                          : undefined
-                      }
-                    />
-                    {/* <CheckBox checked title="Keep me signed in" /> */}
                     <View style={{marginVertical: 20}}>
                       <X_Button
                         onPress={handleSubmit}
                         disabled={isSubmitting}
-                        title={'Sign in'}
+                        title={'Continue'}
                         color={colors.grey}
                         fontSize={14}
                         borderWidth={1.5}
@@ -141,12 +105,14 @@ export const LoginPage = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.dispatch({
-                ...StackActions.push(routes.forgotPassword),
+                ...StackActions.push(routes.home),
               });
             }}>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            <Text style={styles.forgotPassword}>Try another way</Text>
           </TouchableOpacity>
-          <Text style={styles.about}>By Young Construction Forum of NCASL</Text>
+          <Text style={[styles.about, {}]}>
+            By Young Construction Forum of NCASL
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>
