@@ -33,7 +33,6 @@ const forgotpasswordValidationSchema = yup.object().shape({
 
 export const ForgotPasswordPage = () => {
   const navigation = useNavigation();
-  const windowHeight = useWindowDimensions().height;
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -110,9 +109,7 @@ export const ForgotPasswordPage = () => {
             }}>
             <Text style={styles.forgotPassword}>Try another way</Text>
           </TouchableOpacity>
-          <Text style={[styles.about, {}]}>
-            By Young Construction Forum of NCASL
-          </Text>
+          <Text style={styles.about}>By Young Construction Forum of NCASL</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
