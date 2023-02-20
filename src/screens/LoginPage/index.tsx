@@ -124,29 +124,7 @@ export const LoginPage = () => {
                           : undefined
                       }
                     />
-                    <TouchableOpacity
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row-reverse',
-                        marginTop: -15,
-                      }}
-                      onPress={() => {
-                        navigation.dispatch({
-                          ...StackActions.push(routes.home),
-                        });
-                      }}>
-                      <Text
-                        style={[
-                          styles.textType,
-                          {
-                            color: 'white',
-                            fontSize: 12,
-                            marginTop: 10,
-                          },
-                        ]}>
-                        Forgot Password?
-                      </Text>
-                    </TouchableOpacity>
+
                     <View style={{marginVertical: 20}}>
                       <X_Button
                         onPress={handleSubmit}
@@ -162,6 +140,15 @@ export const LoginPage = () => {
               )}
             </Formik>
           </KeyboardAvoidingView>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.dispatch({
+                ...StackActions.push(routes.home),
+              });
+            }}>
+            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+          </TouchableOpacity>
+          <Text style={styles.about}>By Young Construction Forum of NCASL</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
