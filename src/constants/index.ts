@@ -11,4 +11,5 @@ export const routes = {
   login: 'Login',
   signUp: 'SignUp',
   forgotPassword: 'Forgot Password',
+  newsDetails: 'News Details',
 };

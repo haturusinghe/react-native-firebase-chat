@@ -15,9 +15,10 @@ import {colors, routes} from '../../constants';
 import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
-import {Button, CheckBox, Icon} from 'react-native-elements';
+import {Button, CheckBox} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
+import {Icon} from 'react-native-elements/dist/icons/Icon';
 
 interface LoginType {
   email: string;
