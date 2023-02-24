@@ -15,6 +15,7 @@ import {routes} from './src/constants';
 import {HomeScreen} from './src/screens/Home';
 import {BottomTabs} from './src/components/BottomTabs';
 import {NewsDetails} from './src/screens/NewsDetails';
+import {EventScheduleDetails} from './src/screens/EventScheduleDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +37,16 @@ function App(): JSX.Element {
           name={routes.forgotPassword}
           component={ForgotPasswordPage}
         />
-        <Stack.Screen name={routes.newsDetails} component={NewsDetails} />
+        <Stack.Screen
+          name={routes.newsDetails}
+          component={NewsDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.scheduleDetails}
+          component={EventScheduleDetails}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

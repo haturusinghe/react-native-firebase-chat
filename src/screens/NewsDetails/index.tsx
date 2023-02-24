@@ -2,11 +2,13 @@ import moment from 'moment';
 import * as React from 'react';
 import {ScrollView, useWindowDimensions, View} from 'react-native';
 import {Image, Text} from 'react-native-elements';
+import {MyHeader} from '../../components/MyHeader';
 import {styles} from './style';
 
 export const NewsDetails = () => {
   return (
     <ScrollView>
+      <MyHeader title="News Details" />
       <Image
         source={{
           uri: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',

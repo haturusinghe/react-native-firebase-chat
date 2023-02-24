@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
-import {Header, Tab} from 'react-native-elements';
+import {Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
 import {Schedule} from '../../components/Schedule';
 import {styles} from './style';

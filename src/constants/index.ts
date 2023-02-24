@@ -1,8 +1,10 @@
 export const colors = {
   primary: 'yellow',
   primary_dark: '#D4AC0D',
-  grey: 'grey',
+  success: 'green',
   error: 'red',
+
+  grey: 'grey',
   white: 'white',
   black: 'black',
 };
@@ -13,4 +15,5 @@ export const routes = {
   signUp: 'SignUp',
   forgotPassword: 'Forgot Password',
   newsDetails: 'News Details',
+  scheduleDetails: 'Schedule Details',
 };

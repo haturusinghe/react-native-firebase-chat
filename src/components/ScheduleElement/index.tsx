@@ -10,7 +10,7 @@ export const ScheduleElement = () => {
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails),
+      ...StackActions.push(routes.scheduleDetails),
     });
   };
   return (
