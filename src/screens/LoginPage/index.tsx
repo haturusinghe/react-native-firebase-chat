@@ -39,7 +39,10 @@ export const LoginPage = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar backgroundColor={colors.primary} barStyle={'light-content'} />
+      <StatusBar
+        backgroundColor={colors.primary_dark}
+        barStyle={'light-content'}
+      />
       <ScrollView style={styles.scrollview}>
         <View>
           <KeyboardAvoidingView

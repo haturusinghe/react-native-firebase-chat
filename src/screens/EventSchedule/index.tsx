@@ -1,29 +1,28 @@
 import * as React from 'react';
-import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
-import {Header, Tab, TabView, Text} from 'react-native-elements';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {Header, Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
-import {NewsFeed} from '../../components/NewsFeed';
-import {colors} from '../../constants';
+import {Schedule} from '../../components/Schedule';
 import {styles} from './style';
 
-export const HomeScreen = () => {
+export const EventSchedule = () => {
   const [index, setIndex] = React.useState<number>(0);
   return (
     <SafeAreaView>
-      <MyHeader title="Home" />
+      <MyHeader title="Event Schedule" />
       <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
         <Tab.Item
-          title="Newsfeed"
+          title="All Sessions"
           containerStyle={styles.tabContainer}
           titleStyle={styles.tabTitle}
         />
         <Tab.Item
-          title="Convention Updates"
+          title="My Schedules"
           containerStyle={styles.tabContainer}
           titleStyle={styles.tabTitle}
         />
       </Tab>
-      <ScrollView>{index === 0 ? <NewsFeed /> : <NewsFeed />}</ScrollView>
+      <ScrollView>{index === 0 ? <Schedule /> : <Schedule />}</ScrollView>
     </SafeAreaView>
   );
 };

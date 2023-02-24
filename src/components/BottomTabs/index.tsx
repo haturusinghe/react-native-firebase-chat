@@ -1,5 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {EventSchedule} from '../../screens/EventSchedule';
 import {ForgotPasswordPage} from '../../screens/ForgotPassword';
 import {HomeScreen} from '../../screens/Home';
 
@@ -21,7 +22,7 @@ export const BottomTabs = () => {
       />
       <Tab.Screen
         name="Calendar"
-        component={ForgotPasswordPage}
+        component={EventSchedule}
         options={{
           title: 'Calendar',
           headerShown: false,

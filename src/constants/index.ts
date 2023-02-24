@@ -1,5 +1,6 @@
 export const colors = {
   primary: 'yellow',
+  primary_dark: '#D4AC0D',
   grey: 'grey',
   error: 'red',
   white: 'white',
