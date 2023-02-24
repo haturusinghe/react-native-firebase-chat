@@ -31,7 +31,7 @@ export const ScheduleElement = () => {
       <View style={[styles.row, styles.forMoreDetails]}>
         <Text style={styles.forMoreDetailsText}>For more Details</Text>
         <Icon
-          name="arrow-circle-o-right"
+          name="caret-right"
           type="font-awesome"
           size={18}
           color={colors.black}
