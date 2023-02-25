@@ -1,20 +1,20 @@
 import {StackActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import * as React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {View} from 'react-native';
 import {Chip, Icon, Text} from 'react-native-elements';
 import {colors, routes} from '../../constants';
 import {styles} from './style';
 
 export const EventDetailsElement = () => {
   const navigation = useNavigation();
-  const navigateDetailsPage = () => {
+  const navigateParticipantPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails),
+      ...StackActions.push(routes.participants),
     });
   };
   return (
-    <TouchableOpacity style={styles.card} onPress={navigateDetailsPage}>
+    <View style={styles.card}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>{'Season 2: Cross border contracting'}</Text>
         <Icon name="file" type="font-awesome" size={18} color={colors.black} />
@@ -122,8 +122,9 @@ export const EventDetailsElement = () => {
             borderColor: colors.error,
             backgroundColor: colors.black,
           }}
+          onPress={navigateParticipantPage}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };

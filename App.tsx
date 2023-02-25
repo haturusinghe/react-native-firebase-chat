@@ -16,6 +16,7 @@ import {HomeScreen} from './src/screens/Home';
 import {BottomTabs} from './src/components/BottomTabs';
 import {NewsDetails} from './src/screens/NewsDetails';
 import {EventScheduleDetails} from './src/screens/EventScheduleDetails';
+import {Participants} from './src/screens/Participants';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ function App(): JSX.Element {
         <Stack.Screen
           name={routes.scheduleDetails}
           component={EventScheduleDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.participants}
+          component={Participants}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

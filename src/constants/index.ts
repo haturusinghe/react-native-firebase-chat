@@ -16,4 +16,5 @@ export const routes = {
   forgotPassword: 'Forgot Password',
   newsDetails: 'News Details',
   scheduleDetails: 'Schedule Details',
+  participants: 'Participants',
 };
