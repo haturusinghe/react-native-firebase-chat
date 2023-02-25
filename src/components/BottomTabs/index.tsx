@@ -3,6 +3,7 @@ import {Icon} from 'react-native-elements/dist/icons/Icon';
 import {EventSchedule} from '../../screens/EventSchedule';
 import {ForgotPasswordPage} from '../../screens/ForgotPassword';
 import {HomeScreen} from '../../screens/Home';
+import {NotificationPage} from '../../screens/NotificationPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +33,17 @@ export const BottomTabs = () => {
         }}
       />
       <Tab.Screen
+        name="notifications"
+        component={NotificationPage}
+        options={{
+          title: 'Notifications',
+          headerShown: false,
+          tabBarIcon: ({color}) => {
+            return <Icon name="notifications" />;
+          },
+        }}
+      />
+      <Tab.Screen
         name="Community"
         component={ForgotPasswordPage}
         options={{
@@ -39,17 +51,6 @@ export const BottomTabs = () => {
           headerShown: false,
           tabBarIcon: ({color}) => {
             return <Icon name="groups" />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="notifications"
-        component={ForgotPasswordPage}
-        options={{
-          title: 'Notifications',
-          headerShown: false,
-          tabBarIcon: ({color}) => {
-            return <Icon name="notifications" />;
           },
         }}
       />
