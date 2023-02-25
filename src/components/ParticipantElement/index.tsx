@@ -1,12 +1,19 @@
+import {StackActions, useNavigation} from '@react-navigation/native';
 import * as React from 'react';
-import {Image, View} from 'react-native';
+import {Image, TouchableOpacity, View} from 'react-native';
 import {Icon, Text} from 'react-native-elements';
-import {colors} from '../../constants';
+import {colors, routes} from '../../constants';
 import {styles} from './style';
 
 export const ParticipantElement = () => {
+  const navigation = useNavigation();
+  const navigateProfilePage = () => {
+    navigation.dispatch({
+      ...StackActions.push(routes.profile),
+    });
+  };
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={navigateProfilePage}>
       <View style={styles.row}>
         <Image
           source={{
@@ -28,6 +35,6 @@ export const ParticipantElement = () => {
           />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

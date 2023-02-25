@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
   content: {
     marginLeft: 20,
     flex: 5,
+    justifyContent: 'center',
   },
   title: {
     fontWeight: '800',

@@ -17,4 +17,5 @@ export const routes = {
   newsDetails: 'News Details',
   scheduleDetails: 'Schedule Details',
   participants: 'Participants',
+  profile: 'Profile',
 };
