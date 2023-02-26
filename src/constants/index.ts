@@ -19,6 +19,8 @@ export const routes = {
   participants: 'Participants',
   profile: 'Profile',
   subDirectory: 'subDirectory',
+  about: 'About',
+  companyProfile: 'Company Profile',
 };
 
 export enum directoryTypes {

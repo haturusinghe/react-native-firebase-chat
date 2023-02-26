@@ -19,6 +19,8 @@ import {EventScheduleDetails} from './src/screens/EventScheduleDetails';
 import {Participants} from './src/screens/Participants';
 import {Profile} from './src/screens/Profile';
 import {SubDirectory} from './src/screens/SubDirectory';
+import {About} from './src/screens/About';
+import {CompanyProfile} from './src/screens/ComapyProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -64,6 +66,16 @@ function App(): JSX.Element {
         <Stack.Screen
           name={routes.subDirectory}
           component={SubDirectory}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.about}
+          component={About}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.companyProfile}
+          component={CompanyProfile}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

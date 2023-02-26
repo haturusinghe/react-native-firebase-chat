@@ -12,6 +12,7 @@ export const SubDirectory = () => {
       <ScrollView>
         <ParticipantElement
           round={route?.params?.round}
+          url={route?.params?.url}
           title="Mr. Rabi Sighj"
           subTitle="President"
           text="Pacific Formwork Pvt Ltd"
@@ -19,6 +20,7 @@ export const SubDirectory = () => {
         />
         <ParticipantElement
           round={route?.params?.round}
+          url={route?.params?.url}
           title="Mr. Rabi Sighj"
           subTitle="President"
           text="Pacific Formwork Pvt Ltd"
