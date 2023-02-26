@@ -18,6 +18,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   image: {
+    width: 50,
+    height: 50,
+    flex: 1,
+  },
+  roundImage: {
     borderRadius: 50,
     width: 50,
     height: 50,

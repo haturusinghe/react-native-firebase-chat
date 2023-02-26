@@ -18,4 +18,14 @@ export const routes = {
   scheduleDetails: 'Schedule Details',
   participants: 'Participants',
   profile: 'Profile',
+  subDirectory: 'subDirectory',
 };
+
+export enum directoryTypes {
+  About,
+  IFAWPCA_Members,
+  OfficeBearers,
+  BoardMembers,
+  Delegates,
+  MainSponsors,
+}

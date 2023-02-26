@@ -1,5 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {Directory} from '../../screens/Directory';
 import {EventSchedule} from '../../screens/EventSchedule';
 import {ForgotPasswordPage} from '../../screens/ForgotPassword';
 import {HomeScreen} from '../../screens/Home';
@@ -45,7 +46,7 @@ export const BottomTabs = () => {
       />
       <Tab.Screen
         name="Community"
-        component={ForgotPasswordPage}
+        component={Directory}
         options={{
           title: 'Community',
           headerShown: false,

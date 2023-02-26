@@ -5,11 +5,27 @@ import {Icon, Text} from 'react-native-elements';
 import {colors, routes} from '../../constants';
 import {styles} from './style';
 
-export const ParticipantElement = () => {
+export const ParticipantElement = ({
+  round = true,
+  url,
+  params = {},
+  imageUrl,
+  title,
+  subTitle,
+  text,
+}: {
+  round?: boolean;
+  url?: string;
+  params?: object;
+  imageUrl: string;
+  title: string;
+  subTitle?: string;
+  text?: string;
+}) => {
   const navigation = useNavigation();
   const navigateProfilePage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.profile),
+      ...StackActions.push(url || routes.profile, params),
     });
   };
   return (
@@ -17,14 +33,14 @@ export const ParticipantElement = () => {
       <View style={styles.row}>
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+            uri: imageUrl,
           }}
-          style={styles.image}
+          style={round ? styles.roundImage : styles.image}
         />
         <View style={styles.content}>
-          <Text style={styles.title}>Mr. Rabi Singh</Text>
-          <Text>Managing Director</Text>
-          <Text>Pachfic formwork Pvt Ltd</Text>
+          <Text style={styles.title}>{title}</Text>
+          {subTitle && <Text>{subTitle}</Text>}
+          {text && <Text>{text}</Text>}
         </View>
         <View style={styles.flexEnd}>
           <Icon
