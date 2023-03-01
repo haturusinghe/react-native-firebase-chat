@@ -1,9 +1,8 @@
 import * as React from 'react';
-import {SafeAreaView, ScrollView, StatusBar, View} from 'react-native';
-import {Header, Tab, TabView, Text} from 'react-native-elements';
+import {SafeAreaView, ScrollView} from 'react-native';
+import {Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
 import {NewsFeed} from '../../components/NewsFeed';
-import {colors} from '../../constants';
 import {styles} from './style';
 
 export const HomeScreen = () => {

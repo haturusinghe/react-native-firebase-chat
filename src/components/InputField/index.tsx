@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {Input} from 'react-native-elements';
 import {colors} from '../../constants';
 
@@ -37,26 +37,3 @@ export const InputField = (props: any) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    fontFamily: 'manrope',
-    backgroundColor: 'green',
-    borderRadius: 10,
-    color: colors.grey,
-  },
-  errormessage: {
-    fontFamily: 'manrope',
-    color: colors.error,
-    marginLeft: 10,
-    fontSize: 12,
-    paddingVertical: 5,
-  },
-  searchSection: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-});

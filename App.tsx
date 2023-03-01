@@ -12,7 +12,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {LoginPage} from './src/screens/LoginPage';
 import {ForgotPasswordPage} from './src/screens/ForgotPassword';
 import {routes} from './src/constants';
-import {HomeScreen} from './src/screens/Home';
 import {BottomTabs} from './src/components/BottomTabs';
 import {NewsDetails} from './src/screens/NewsDetails';
 import {EventScheduleDetails} from './src/screens/EventScheduleDetails';

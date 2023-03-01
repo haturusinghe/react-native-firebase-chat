@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -15,7 +14,7 @@ import {colors, routes} from '../../constants';
 import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
-import {Button, CheckBox} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
 import {Icon} from 'react-native-elements/dist/icons/Icon';

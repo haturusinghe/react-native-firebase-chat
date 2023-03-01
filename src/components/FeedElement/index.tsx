@@ -1,7 +1,7 @@
 import {StackActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import * as React from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-elements';
 import {routes} from '../../constants';
 import {styles} from './style';

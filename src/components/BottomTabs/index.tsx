@@ -2,7 +2,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
 import {Directory} from '../../screens/Directory';
 import {EventSchedule} from '../../screens/EventSchedule';
-import {ForgotPasswordPage} from '../../screens/ForgotPassword';
 import {HomeScreen} from '../../screens/Home';
 import {NotificationPage} from '../../screens/NotificationPage';
 
@@ -17,7 +16,7 @@ export const BottomTabs = () => {
         options={{
           title: 'Feed',
           headerShown: false,
-          tabBarIcon: ({color}) => {
+          tabBarIcon: () => {
             return <Icon name="home" />;
           },
         }}
@@ -28,7 +27,7 @@ export const BottomTabs = () => {
         options={{
           title: 'Calendar',
           headerShown: false,
-          tabBarIcon: ({color}) => {
+          tabBarIcon: () => {
             return <Icon name="event" />;
           },
         }}
@@ -39,7 +38,7 @@ export const BottomTabs = () => {
         options={{
           title: 'Notifications',
           headerShown: false,
-          tabBarIcon: ({color}) => {
+          tabBarIcon: () => {
             return <Icon name="notifications" />;
           },
         }}
@@ -50,7 +49,7 @@ export const BottomTabs = () => {
         options={{
           title: 'Community',
           headerShown: false,
-          tabBarIcon: ({color}) => {
+          tabBarIcon: () => {
             return <Icon name="groups" />;
           },
         }}

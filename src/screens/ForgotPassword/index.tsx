@@ -4,10 +4,8 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import {Formik} from 'formik';
@@ -16,7 +14,6 @@ import {colors, routes} from '../../constants';
 import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
-import {Button, CheckBox, Icon} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
 

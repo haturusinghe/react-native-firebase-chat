@@ -1,8 +1,8 @@
 import {StackActions, useNavigation} from '@react-navigation/native';
 import * as React from 'react';
 import {Image, TouchableOpacity, View} from 'react-native';
-import {Icon, Text} from 'react-native-elements';
-import {colors, routes} from '../../constants';
+import {Text} from 'react-native-elements';
+import {routes} from '../../constants';
 import {styles} from './style';
 
 export const ChatElement = ({
