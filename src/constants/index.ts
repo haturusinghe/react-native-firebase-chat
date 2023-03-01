@@ -21,6 +21,7 @@ export const routes = {
   subDirectory: 'subDirectory',
   about: 'About',
   companyProfile: 'Company Profile',
+  chat: 'chat',
 };
 
 export enum directoryTypes {

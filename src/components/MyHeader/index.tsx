@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {StackActions, useNavigation} from '@react-navigation/native';
 import {View} from 'react-native';
 import {Header, Text} from 'react-native-elements';
-import {colors} from '../../constants';
+import {colors, routes} from '../../constants';
 import {styles} from './style';
 
 export const MyHeader = ({title}: {title: string}) => {
   const navigation = useNavigation();
-  //   const navigateDetailsPage = () => {
-  //     navigation.dispatch({
-  //       ...StackActions.push(routes.newsDetails),
-  //     });
-  //   };
+  const chatPage = () => {
+    navigation.dispatch({
+      ...StackActions.push(routes.chat),
+    });
+  };
   return (
     <View>
       <Header
@@ -21,7 +21,11 @@ export const MyHeader = ({title}: {title: string}) => {
           iconStyle: {color: colors.black},
         }}
         centerComponent={<Text style={styles.title}>{title}</Text>}
-        rightComponent={{icon: 'home', color: colors.black}}
+        rightComponent={{
+          icon: 'message',
+          color: colors.black,
+          onPress: chatPage,
+        }}
         backgroundColor={colors.primary_dark}
         containerStyle={{
           backgroundColor: colors.primary,

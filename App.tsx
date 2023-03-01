@@ -21,6 +21,7 @@ import {Profile} from './src/screens/Profile';
 import {SubDirectory} from './src/screens/SubDirectory';
 import {About} from './src/screens/About';
 import {CompanyProfile} from './src/screens/ComapyProfile';
+import {Chat} from './src/screens/Chat';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +77,11 @@ function App(): JSX.Element {
         <Stack.Screen
           name={routes.companyProfile}
           component={CompanyProfile}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.chat}
+          component={Chat}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
