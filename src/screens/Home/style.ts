@@ -11,4 +11,7 @@ export const styles = StyleSheet.create({
   tabBorder: {
     backgroundColor: colors.primary,
   },
+  flex: {
+    flex: 1,
+  },
 });

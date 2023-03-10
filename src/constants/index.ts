@@ -24,6 +24,8 @@ export const routes = {
   chat: 'chat',
 };
 
+export const ACCESS_TOKEN = 'ACCESS_TOKEN';
+
 export enum directoryTypes {
   About,
   IFAWPCA_Members,
@@ -31,4 +33,19 @@ export enum directoryTypes {
   BoardMembers,
   Delegates,
   MainSponsors,
+}
+
+export const API_ROUTES = {
+  USER: {
+    LOGIN: '/login',
+    WHO_AM_I: '/whoAmI',
+  },
+};
+
+export enum HTTP_TYPES {
+  'GET' = 'get',
+  'POST' = 'post',
+  'PUT' = 'put',
+  'DELETE' = 'delete',
+  'PATCH' = 'patch',
 }
