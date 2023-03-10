@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
-import {colors, routes} from '../../constants';
+import {ACCESS_TOKEN, API_ROUTES, colors, routes} from '../../constants';
 import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
@@ -18,6 +18,11 @@ import {Button} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {useMutation} from '../../hooks/useMutate';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LoadingWrapper} from '../../components/LoadingWrapper';
+import {useAppDispatch} from '../../hooks/useRedux';
+import {userSlice} from '../../store/user';
 
 interface LoginType {
   email: string;
@@ -34,7 +39,26 @@ const loginValidationSchema = yup.object().shape({
 
 export const LoginPage = () => {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
+  const {loading, mutate} = useMutation({url: API_ROUTES.USER.LOGIN});
+
+  const handleLogin = async (values: LoginType, setErrors: any) => {
+    const res = await mutate(values);
+    console.log(res.data?.data?.token);
+    if (res.success) {
+      AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
+      dispatch(userSlice.actions.setUser(res.data.data.user));
+      navigation.dispatch({
+        ...StackActions.push(routes.home),
+      });
+    } else {
+      setErrors({
+        email: 'Invalid Credentials',
+        password: 'Invalid Credentials',
+      });
+    }
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -42,116 +66,123 @@ export const LoginPage = () => {
         backgroundColor={colors.primary_dark}
         barStyle={'light-content'}
       />
-      <ScrollView style={styles.scrollview}>
-        <View>
-          <KeyboardAvoidingView
-            style={{
-              paddingVertical: 40,
-              paddingHorizontal: 30,
-              borderRadius: 10,
-              // height: maskHeight,
-            }}>
-            <Image
-              source={require('../../assets/images/LOGO.png')}
-              style={styles.image}
-            />
-            <Formik
-              validationSchema={loginValidationSchema}
-              initialValues={{email: '', password: ''}}
-              validateOnChange={true}
-              // onReset={(value: any)=> {console.log(value);
-              //   email:"he"
-              // }}
-              onSubmit={(values: LoginType, {resetForm}) => {}}>
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-                setFieldValue,
-                isValid,
-                setFieldTouched,
-                isSubmitting,
-              }) => (
-                <>
-                  <View>
-                    <InputField
-                      placeholder={'Email'}
-                      keyboardType="email-address"
-                      autoCapitalize="none"
-                      value={values.email}
-                      onChangeText={(value: string) =>
-                        setFieldValue('email', value)
-                      }
-                      onBlur={() => setFieldTouched('email')}
-                      editable={!isSubmitting}
-                      errorMessage={
-                        touched.email && errors.email ? errors.email : undefined
-                      }
-                    />
-                    <InputField
-                      onChangeText={handleChange('password')}
-                      onBlur={handleBlur('password')}
-                      autoCapitalize="none"
-                      rightIcon={() => (
-                        <Button
-                          icon={
-                            !passwordVisible
-                              ? {
-                                  type: 'ionicon',
-                                  name: 'eye-outline',
-                                  color: colors.grey,
-                                }
-                              : {
-                                  type: 'ionicon',
-                                  name: 'eye-off-outline',
-                                  color: colors.grey,
-                                }
-                          }
-                          type={'clear'}
-                          onPress={() => setPasswordVisible(!passwordVisible)}>
-                          <Icon name="save" color="white" />
-                        </Button>
-                      )}
-                      placeholder="Password"
-                      secureTextEntry={passwordVisible}
-                      value={values.password}
-                      editable={!isSubmitting}
-                      errorMessage={
-                        touched.password && errors.password
-                          ? errors.password
-                          : undefined
-                      }
-                    />
-                    {/* <CheckBox checked title="Keep me signed in" /> */}
-                    <View style={{marginVertical: 20}}>
-                      <X_Button
-                        onPress={handleSubmit}
-                        disabled={isSubmitting}
-                        title={'Sign in'}
-                        color={colors.grey}
-                        fontSize={14}
-                        borderWidth={1.5}
+      <LoadingWrapper loading={loading}>
+        <ScrollView style={styles.scrollview}>
+          <View>
+            <KeyboardAvoidingView
+              style={{
+                paddingVertical: 40,
+                paddingHorizontal: 30,
+                borderRadius: 10,
+                // height: maskHeight,
+              }}>
+              <Image
+                source={require('../../assets/images/LOGO.png')}
+                style={styles.image}
+              />
+              <Formik
+                validationSchema={loginValidationSchema}
+                initialValues={{email: '', password: ''}}
+                validateOnChange={true}
+                onSubmit={(values: LoginType, {setErrors}) => {
+                  handleLogin(values, setErrors);
+                }}>
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  touched,
+                  setFieldValue,
+                  isValid,
+                  setFieldTouched,
+                  isSubmitting,
+                }) => (
+                  <>
+                    <View>
+                      <InputField
+                        placeholder={'Email'}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        value={values.email}
+                        onChangeText={(value: string) =>
+                          setFieldValue('email', value)
+                        }
+                        onBlur={() => setFieldTouched('email')}
+                        editable={!isSubmitting}
+                        errorMessage={
+                          touched.email && errors.email
+                            ? errors.email
+                            : undefined
+                        }
                       />
+                      <InputField
+                        onChangeText={handleChange('password')}
+                        onBlur={handleBlur('password')}
+                        autoCapitalize="none"
+                        rightIcon={() => (
+                          <Button
+                            icon={
+                              !passwordVisible
+                                ? {
+                                    type: 'ionicon',
+                                    name: 'eye-outline',
+                                    color: colors.grey,
+                                  }
+                                : {
+                                    type: 'ionicon',
+                                    name: 'eye-off-outline',
+                                    color: colors.grey,
+                                  }
+                            }
+                            type={'clear'}
+                            onPress={() =>
+                              setPasswordVisible(!passwordVisible)
+                            }>
+                            <Icon name="save" color="white" />
+                          </Button>
+                        )}
+                        placeholder="Password"
+                        secureTextEntry={passwordVisible}
+                        value={values.password}
+                        editable={!isSubmitting}
+                        errorMessage={
+                          touched.password && errors.password
+                            ? errors.password
+                            : undefined
+                        }
+                      />
+                      {/* <CheckBox checked title="Keep me signed in" /> */}
+                      <View style={{marginVertical: 20}}>
+                        <X_Button
+                          onPress={handleSubmit}
+                          disabled={isSubmitting}
+                          title={'Sign in'}
+                          color={colors.grey}
+                          fontSize={14}
+                          borderWidth={1.5}
+                        />
+                      </View>
                     </View>
-                  </View>
-                </>
-              )}
-            </Formik>
-          </KeyboardAvoidingView>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.dispatch({
-                ...StackActions.push(routes.forgotPassword),
-              });
-            }}>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
-          <Text style={styles.about}>By Young Construction Forum of NCASL</Text>
-        </View>
-      </ScrollView>
+                  </>
+                )}
+              </Formik>
+            </KeyboardAvoidingView>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.dispatch({
+                  ...StackActions.push(routes.forgotPassword),
+                });
+              }}>
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            </TouchableOpacity>
+            <Text style={styles.about}>
+              By Young Construction Forum of NCASL
+            </Text>
+          </View>
+        </ScrollView>
+      </LoadingWrapper>
     </SafeAreaView>
   );
 };

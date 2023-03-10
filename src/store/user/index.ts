@@ -34,10 +34,8 @@ export const checkUser = createAsyncThunk(
   'user/checkUser',
   async (_, thunkApi) => {
     try {
-      console.log('calling here');
-      const res = await http.get<User>(API_ROUTES.USER.WHO_AM_I);
-      console.log({res});
-      return res.data;
+      const res = await http.get<any>(API_ROUTES.USER.WHO_AM_I);
+      return res.data?.data?.user;
     } catch (err) {
       console.log({err});
       return null;

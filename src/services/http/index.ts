@@ -3,15 +3,13 @@ import axios from 'axios';
 import {ACCESS_TOKEN} from '../../constants';
 
 const http = axios.create({
-  baseURL: 'http://localhost:5000/api/v1',
+  baseURL: 'http://10.0.2.2:5000',
   timeout: 30000 * 2,
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 http.interceptors.request.use(async (config: any) => {
-  config.headers.authorization = `Bearer ${await AsyncStorage.getItem(
-    ACCESS_TOKEN,
-  )}`;
+  config.headers['auth-token'] = await AsyncStorage.getItem(ACCESS_TOKEN);
   return config;
 });
 

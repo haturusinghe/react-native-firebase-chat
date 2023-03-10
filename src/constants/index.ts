@@ -37,8 +37,8 @@ export enum directoryTypes {
 
 export const API_ROUTES = {
   USER: {
-    LOGIN: '/login',
-    WHO_AM_I: '/whoAmI',
+    LOGIN: '/auth/login',
+    WHO_AM_I: '/auth/check-user',
   },
 };
 
