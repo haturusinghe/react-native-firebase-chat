@@ -1,13 +1,14 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
+import {withAuth} from '../../hoc/withAuth';
 import {Directory} from '../../screens/Directory';
 import {EventSchedule} from '../../screens/EventSchedule';
-import {HomeScreen} from '../../screens/Home';
+import HomeScreen from '../../screens/Home';
 import {NotificationPage} from '../../screens/NotificationPage';
 
 const Tab = createBottomTabNavigator();
 
-export const BottomTabs = () => {
+const BottomTabs = () => {
   return (
     <Tab.Navigator initialRouteName="hel">
       <Tab.Screen
@@ -57,3 +58,5 @@ export const BottomTabs = () => {
     </Tab.Navigator>
   );
 };
+
+export default withAuth(BottomTabs);

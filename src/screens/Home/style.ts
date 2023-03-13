@@ -14,4 +14,8 @@ export const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  searchBar: {
+    marginHorizontal: 15,
+    marginTop: 20,
+  },
 });

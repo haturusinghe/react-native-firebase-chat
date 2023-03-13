@@ -14,7 +14,7 @@ export const InputField = (props: any) => {
           borderColor: colors.grey,
           borderWidth: props.borderWidths || 2,
           height: props.height || 48,
-          marginBottom: 25,
+          marginBottom: props.marginBottom || 25,
         }}
         inputContainerStyle={{
           textAlignVertical: 'top',

@@ -3,7 +3,7 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {ForgotPasswordPage} from '../../screens/ForgotPassword';
 import {routes} from '../../constants';
-import {BottomTabs} from '../../components/BottomTabs';
+import BottomTabs from '../../components/BottomTabs';
 import {NewsDetails} from '../../screens/NewsDetails';
 import {EventScheduleDetails} from '../../screens/EventScheduleDetails';
 import {Participants} from '../../screens/Participants';
@@ -14,7 +14,7 @@ import {CompanyProfile} from '../../screens/ComapyProfile';
 import {Chat} from '../../screens/Chat';
 import {checkUser} from '../../store/user';
 import {useAppDispatch} from '../../hooks/useRedux';
-import {LoginPage} from '../../screens/LoginPage';
+import LoginPage from '../../screens/LoginPage';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();

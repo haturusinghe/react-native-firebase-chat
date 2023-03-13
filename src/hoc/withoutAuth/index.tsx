@@ -3,7 +3,7 @@ import React, {FC, useEffect, ComponentType} from 'react';
 import {routes} from '../../constants';
 import {useAppSelector} from '../../hooks/useRedux';
 
-export function withAuth<P>(WrappedComponent: ComponentType<P>): FC<P> {
+export function withoutAuth<P>(WrappedComponent: ComponentType<P>): FC<P> {
   const VisibityControlled = (props: any) => {
     const {authenticated, user} = useAppSelector(store => store.user);
     const linkTo = useLinkTo();
@@ -13,8 +13,8 @@ export function withAuth<P>(WrappedComponent: ComponentType<P>): FC<P> {
     }, [authenticated]);
 
     const checkPermission = () => {
-      if (authenticated === false) {
-        linkTo('/' + routes.login);
+      if (authenticated === true) {
+        linkTo('/' + routes.home);
         return;
       }
     };

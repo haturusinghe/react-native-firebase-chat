@@ -9,7 +9,9 @@ const http = axios.create({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 http.interceptors.request.use(async (config: any) => {
-  config.headers['auth-token'] = await AsyncStorage.getItem(ACCESS_TOKEN);
+  config.headers.authorization = `Bearer ${await AsyncStorage.getItem(
+    ACCESS_TOKEN,
+  )}`;
   return config;
 });
 

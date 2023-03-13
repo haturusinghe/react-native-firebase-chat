@@ -40,6 +40,9 @@ export const API_ROUTES = {
     LOGIN: '/auth/login',
     WHO_AM_I: '/auth/check-user',
   },
+  NEWS: {
+    GET_ALL: '/api/news',
+  },
 };
 
 export enum HTTP_TYPES {
@@ -49,3 +52,5 @@ export enum HTTP_TYPES {
   'DELETE' = 'delete',
   'PATCH' = 'patch',
 }
+
+export const PAGE_SIZE = 3;

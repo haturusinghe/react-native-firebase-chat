@@ -1,31 +1,63 @@
-import * as React from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import {Tab} from 'react-native-elements';
+import React, {useState} from 'react';
+import {SafeAreaView, View} from 'react-native';
 import {MyHeader} from '../../components/MyHeader';
 import {NewsFeed} from '../../components/NewsFeed';
-import {LoadingWrapper} from '../../components/LoadingWrapper';
 import {styles} from './style';
+import {withAuth} from '../../hoc/withAuth';
+import {InputField} from '../../components/InputField';
+import {Button, Icon} from 'react-native-elements';
+import {colors} from '../../constants';
+import {useAppDispatch} from '../../hooks/useRedux';
+import {reloadNews, setSearchTermAction} from '../../store/news';
 
-export const HomeScreen = () => {
-  const [index, setIndex] = React.useState<number>(0);
+const HomeScreen = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searched, setSearched] = useState(false);
+  const dispatch = useAppDispatch();
   return (
     <SafeAreaView style={styles.flex}>
       <MyHeader title="Home" />
-      <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
-        <Tab.Item
-          title="Newsfeed"
-          containerStyle={styles.tabContainer}
-          titleStyle={styles.tabTitle}
+      <View style={styles.searchBar}>
+        <InputField
+          onChangeText={(e: any) => {
+            setSearchTerm(e);
+          }}
+          autoCapitalize="none"
+          rightIcon={() => (
+            <Button
+              icon={
+                !searched
+                  ? {
+                      type: 'ionicon',
+                      name: 'search',
+                      color: colors.grey,
+                    }
+                  : {
+                      type: 'ionicon',
+                      name: 'close',
+                      color: colors.grey,
+                    }
+              }
+              type={'clear'}
+              onPress={() => {
+                if (!searched) {
+                  dispatch(reloadNews(searchTerm));
+                } else {
+                  dispatch(reloadNews(''));
+                  setSearchTerm('');
+                }
+                setSearched(!searched);
+              }}>
+              {/* <Icon name="save" color="white" /> */}
+            </Button>
+          )}
+          placeholder="Search"
+          value={searchTerm}
         />
-        <Tab.Item
-          title="Convention Updates"
-          containerStyle={styles.tabContainer}
-          titleStyle={styles.tabTitle}
-        />
-      </Tab>
-      <LoadingWrapper loading={true}>
-        <ScrollView>{index === 0 ? <NewsFeed /> : <NewsFeed />}</ScrollView>
-      </LoadingWrapper>
+      </View>
+      <NewsFeed />
     </SafeAreaView>
   );
 };
+
+export default withAuth(HomeScreen);

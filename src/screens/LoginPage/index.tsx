@@ -23,6 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LoadingWrapper} from '../../components/LoadingWrapper';
 import {useAppDispatch} from '../../hooks/useRedux';
 import {userSlice} from '../../store/user';
+import {withoutAuth} from '../../hoc/withoutAuth';
 
 interface LoginType {
   email: string;
@@ -37,7 +38,7 @@ const loginValidationSchema = yup.object().shape({
   password: yup.string().required('Password is Required'),
 });
 
-export const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
@@ -186,3 +187,5 @@ export const LoginPage = () => {
     </SafeAreaView>
   );
 };
+
+export default withoutAuth(LoginPage);

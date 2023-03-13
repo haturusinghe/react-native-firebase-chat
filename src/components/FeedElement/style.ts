@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     elevation: 4,
     shadowRadius: 14,
+    height: 400,
   },
   title: {
     fontSize: 16,

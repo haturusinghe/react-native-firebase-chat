@@ -9,4 +9,8 @@ export const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  paginationLoading: {
+    flex: 1,
+    alignItems: 'center',
+  },
 });
