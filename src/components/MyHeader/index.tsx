@@ -5,21 +5,36 @@ import {Header, Text} from 'react-native-elements';
 import {colors, routes} from '../../constants';
 import {styles} from './style';
 
-export const MyHeader = ({title}: {title: string}) => {
+export const MyHeader = ({
+  title,
+  backenable = false,
+}: {
+  title: string;
+  backenable?: boolean;
+}) => {
   const navigation = useNavigation();
   const chatPage = () => {
     navigation.dispatch({
       ...StackActions.push(routes.chat),
     });
   };
+  const goBack = () => {
+    navigation.goBack();
+  };
   return (
     <View>
       <Header
-        leftComponent={{
-          icon: 'menu',
-          color: colors.black,
-          iconStyle: {color: colors.black},
-        }}
+        leftComponent={
+          backenable
+            ? {
+                icon: 'arrow-left',
+                color: colors.black,
+                iconStyle: {color: colors.black},
+                size: 30,
+                onPress: goBack,
+              }
+            : {}
+        }
         centerComponent={<Text style={styles.title}>{title}</Text>}
         rightComponent={{
           icon: 'message',

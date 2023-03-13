@@ -3,7 +3,7 @@ import {API_ROUTES, PAGE_SIZE} from '../../constants';
 import http from '../../services/http';
 
 export interface News {
-  _id: number;
+  _id: string;
   title: string;
   description: string;
   creator: string;
@@ -35,20 +35,17 @@ export const fetchNews = createAsyncThunk(
   async (_, {getState}: any) => {
     try {
       const {news} = getState();
-      console.log('fetching data', news.currentPage, news.totalPages);
       if (news.totalPages > news.currentPage) {
         const res = await http.get<any>(
           `${API_ROUTES.NEWS.GET_ALL}?page=${
             news.currentPage + 1
           }&pageSize=${PAGE_SIZE}&searchTerm=${news.searchTerm}`,
         );
-        console.log({res: res.data});
         return {news: res.data.data, totalPages: res.data.totalPages};
       } else {
         return {news: [], totalPages: news.totalPages};
       }
     } catch (err) {
-      console.log({err});
       return {news: [], totalPages: 0};
     }
   },
@@ -58,22 +55,13 @@ export const reloadNews = createAsyncThunk(
   'pagination/reloadNews',
   async (searchTerm: string, {getState}: any) => {
     try {
-      const {news} = getState();
-      console.log(
-        'reloading data',
-        news.currentPage,
-        news.totalPages,
-        searchTerm,
-      );
       const res = await http.get<any>(
         `${
           API_ROUTES.NEWS.GET_ALL
         }?page=${1}&pageSize=${PAGE_SIZE}&searchTerm=${searchTerm}`,
       );
-      console.log({res: res.data});
       return {news: res.data.data, totalPages: res.data.totalPages, searchTerm};
     } catch (err) {
-      console.log({err});
       return {news: [], totalPages: 0};
     }
   },

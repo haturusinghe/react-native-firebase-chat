@@ -15,17 +15,13 @@ export const NewsFeed = () => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    console.log('reaching herererere', loading, news, currentPage);
     dispatch(fetchNews());
-    console.log('after');
   }, []);
 
   function handlePagination(event: any) {
     const offsetY = event.nativeEvent.contentOffset.y;
     const contentHeight = event.nativeEvent.contentSize.height;
     const layoutHeight = event.nativeEvent.layoutMeasurement.height;
-    console.log('handling pagination');
-
     if (offsetY + layoutHeight >= contentHeight) {
       dispatch(fetchNews());
     }
@@ -49,6 +45,7 @@ export const NewsFeed = () => {
         {news.map((news: News) => (
           <FeedElement
             key={news._id}
+            id={news._id}
             title={news.title}
             date={news.createdAt}
           />

@@ -37,7 +37,6 @@ export const checkUser = createAsyncThunk(
       const res = await http.get<any>(API_ROUTES.USER.WHO_AM_I);
       return res.data?.data?.user;
     } catch (err) {
-      console.log({err});
       return null;
     }
   },

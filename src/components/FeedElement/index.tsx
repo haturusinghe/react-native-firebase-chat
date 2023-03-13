@@ -6,11 +6,19 @@ import {Text} from 'react-native-elements';
 import {routes} from '../../constants';
 import {styles} from './style';
 
-export const FeedElement = ({title, date}: {title: string; date: string}) => {
+export const FeedElement = ({
+  id,
+  title,
+  date,
+}: {
+  id: string;
+  title: string;
+  date: string;
+}) => {
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails),
+      ...StackActions.push(routes.newsDetails, {id: id}),
     });
   };
   return (

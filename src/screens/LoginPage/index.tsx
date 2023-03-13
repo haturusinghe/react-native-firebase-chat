@@ -46,7 +46,6 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (values: LoginType, setErrors: any) => {
     const res = await mutate(values);
-    console.log(res.data?.data?.token);
     if (res.success) {
       AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
       dispatch(userSlice.actions.setUser(res.data.data.user));
