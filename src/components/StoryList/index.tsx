@@ -48,7 +48,7 @@ export const StoryList = () => {
           <FeedElement
             key={story._id}
             id={story._id}
-            url={routes.newsDetails}
+            url={routes.storyDetails}
             title={story.storyTitle}
             date={story.createdAt}
           />

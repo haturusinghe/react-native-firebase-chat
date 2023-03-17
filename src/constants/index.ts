@@ -22,6 +22,7 @@ export const routes = {
   about: 'About',
   companyProfile: 'Company Profile',
   chat: 'chat',
+  storyDetails: 'storyDetails',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
