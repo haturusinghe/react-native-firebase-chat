@@ -1,11 +1,14 @@
-import React from 'react';
-import {RefreshControl, ScrollView} from 'react-native';
-import {routes} from '../../constants';
+import React, {useState} from 'react';
+import {RefreshControl, ScrollView, View} from 'react-native';
+import {Button} from 'react-native-elements';
+import {colors, routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {fetchStory, reloadStory, Story} from '../../store/story';
 import {CalendarFilterButton} from '../CalendarFilterButton';
 import {FeedElement} from '../FeedElement';
+import {InputField} from '../InputField';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
+import {styles} from './style';
 
 export const StoryList = () => {
   const {
@@ -13,6 +16,8 @@ export const StoryList = () => {
     data: stories,
     currentPage,
   } = useAppSelector(store => store.stories);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searched, setSearched] = useState(false);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -29,31 +34,70 @@ export const StoryList = () => {
   }
 
   return (
-    <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
-      <ScrollView
-        pagingEnabled={true}
-        onScrollEndDrag={handlePagination}
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              dispatch(reloadStory({startTime: undefined, endTime: undefined}));
-            }}
-            refreshing={loading}
-            colors={['#9Bd35A', '#689F38']}
-            progressBackgroundColor="#fff"
-          />
-        }>
-        <CalendarFilterButton />
-        {stories?.map((story: Story) => (
-          <FeedElement
-            key={story._id}
-            id={story._id}
-            url={routes.storyDetails}
-            title={story.storyTitle}
-            date={story.createdAt}
-          />
-        ))}
-      </ScrollView>
-    </LoadingWrapper>
+    <View>
+      <View style={styles.searchBar}>
+        <InputField
+          onChangeText={(e: any) => {
+            setSearchTerm(e);
+          }}
+          autoCapitalize="none"
+          rightIcon={() => (
+            <Button
+              icon={
+                !searched
+                  ? {
+                      type: 'ionicon',
+                      name: 'search',
+                      color: colors.grey,
+                    }
+                  : {
+                      type: 'ionicon',
+                      name: 'close',
+                      color: colors.grey,
+                    }
+              }
+              type={'clear'}
+              onPress={() => {
+                if (!searched) {
+                  dispatch(reloadStory(searchTerm));
+                } else {
+                  dispatch(reloadStory(''));
+                  setSearchTerm('');
+                }
+                setSearched(!searched);
+              }}>
+              {/* <Icon name="save" color="white" /> */}
+            </Button>
+          )}
+          placeholder="Search"
+          value={searchTerm}
+        />
+      </View>
+      <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
+        <ScrollView
+          pagingEnabled={true}
+          onScrollEndDrag={handlePagination}
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => {
+                dispatch(reloadStory(''));
+              }}
+              refreshing={loading}
+              colors={['#9Bd35A', '#689F38']}
+              progressBackgroundColor="#fff"
+            />
+          }>
+          {stories?.map((story: Story) => (
+            <FeedElement
+              key={story._id}
+              id={story._id}
+              url={routes.storyDetails}
+              title={story.storyTitle}
+              date={story.createdAt}
+            />
+          ))}
+        </ScrollView>
+      </LoadingWrapper>
+    </View>
   );
 };

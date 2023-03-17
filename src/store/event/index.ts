@@ -60,7 +60,7 @@ export const reloadEvents = createAsyncThunk(
     try {
       const res = await http.get<any>(
         `${
-          API_ROUTES.NEWS.GET_ALL
+          API_ROUTES.EVENTS.GET_ALL
         }?page=${1}&pageSize=${PAGE_SIZE}&startTime=${startTime}&endTime=${endTime}`,
       );
       return {

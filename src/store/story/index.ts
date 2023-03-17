@@ -19,8 +19,7 @@ export interface StoryState {
   loading: boolean;
   currentPage: number;
   totalPages: number;
-  startTime?: Date;
-  endTime?: Date;
+  searchTerm?: string;
 }
 
 const initialState: StoryState = {
@@ -39,7 +38,9 @@ export const fetchStory = createAsyncThunk(
         const res = await http.get<any>(
           `${API_ROUTES.EVENTS.GET_ALL}?page=${
             stories.currentPage + 1
-          }&pageSize=${PAGE_SIZE}`,
+          }&pageSize=${PAGE_SIZE}&searchTerm=${
+            stories.searchTerm ? stories.searchTerm : ''
+          }`,
         );
         return {stories: res.data.data, totalPages: res.data.totalPages};
       } else {
@@ -53,21 +54,19 @@ export const fetchStory = createAsyncThunk(
 
 export const reloadStory = createAsyncThunk(
   'pagination/reloadStory',
-  async (
-    {startTime, endTime}: {startTime?: Date; endTime?: Date},
-    {getState}: any,
-  ) => {
+  async (searchTerm?: string, {getState}: any) => {
     try {
       const res = await http.get<any>(
         `${
-          API_ROUTES.NEWS.GET_ALL
-        }?page=${1}&pageSize=${PAGE_SIZE}&startTime=${startTime}&endTime=${endTime}`,
+          API_ROUTES.EVENTS.GET_ALL
+        }?page=${1}&pageSize=${PAGE_SIZE}&searchTerm=${
+          searchTerm ? searchTerm : ''
+        }`,
       );
       return {
         stories: res.data.data,
         totalPages: res.data.totalPages,
-        startTime,
-        endTime,
+        searchTerm,
       };
     } catch (err) {
       return {stories: [], totalPages: 0};
@@ -114,20 +113,16 @@ export const eventSlice = createSlice({
           action: PayloadAction<{
             stories: Story[];
             totalPages: number;
-            startTime?: Date;
-            endTime?: Date;
+            searchTerm?: string;
           }>,
         ) => {
           state.loading = false;
           state.data = action.payload.stories;
           state.currentPage = 1;
           state.totalPages = action.payload.totalPages;
-          state.startTime = action.payload.startTime
-            ? action.payload.startTime
-            : state.startTime;
-          state.endTime = action.payload.endTime
-            ? action.payload.endTime
-            : state.endTime;
+          state.searchTerm = action.payload?.searchTerm
+            ? action.payload?.searchTerm
+            : '';
         },
       )
       .addCase(reloadStory.rejected, state => {
