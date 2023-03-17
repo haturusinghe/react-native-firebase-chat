@@ -120,7 +120,7 @@ export const CalendarFilterButton = () => {
               <View>
                 <InputField
                   placeholder={'From'}
-                  keyboardType="number"
+                  keyboardType="number-pad"
                   autoCapitalize="none"
                   value={values.from}
                   onChangeText={(value: string) => setFieldValue('from', value)}

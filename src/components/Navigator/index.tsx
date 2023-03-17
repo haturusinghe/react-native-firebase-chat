@@ -17,6 +17,7 @@ import {useAppDispatch} from '../../hooks/useRedux';
 import LoginPage from '../../screens/LoginPage';
 import {StoryDetails} from '../../screens/StoryDetails';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {EventMenu} from '../../screens/EventMenu';
 
 const Stack = createNativeStackNavigator();
 
@@ -88,6 +89,11 @@ export const Navigator = () => {
         <Stack.Screen
           name={routes.storyDetails}
           component={StoryDetails}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={routes.eventMenu}
+          component={EventMenu}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

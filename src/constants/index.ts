@@ -23,6 +23,7 @@ export const routes = {
   companyProfile: 'Company Profile',
   chat: 'chat',
   storyDetails: 'storyDetails',
+  eventMenu: 'eventMenu',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';

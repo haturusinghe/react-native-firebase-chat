@@ -12,7 +12,7 @@ export const EventElement = ({data: event}: {data: Event}) => {
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails, {id: event._id}),
+      ...StackActions.push(routes.eventMenu, {id: event._id}),
     });
   };
   useEffect(() => {
