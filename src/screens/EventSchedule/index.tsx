@@ -3,6 +3,8 @@ import {SafeAreaView, ScrollView} from 'react-native';
 import {Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
 import {Schedule} from '../../components/Schedule';
+import {StoryList} from '../../components/StoryList';
+import {UpcommingEvents} from '../../components/UpcommingEvents';
 import {styles} from './style';
 
 export const EventSchedule = () => {
@@ -12,17 +14,24 @@ export const EventSchedule = () => {
       <MyHeader title="Event Schedule" />
       <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
         <Tab.Item
-          title="All Sessions"
+          title="All Stories"
           containerStyle={styles.tabContainer}
           titleStyle={styles.tabTitle}
         />
         <Tab.Item
-          title="My Schedules"
+          title="Upcomming Events"
+          containerStyle={styles.tabContainer}
+          titleStyle={styles.tabTitle}
+        />
+        <Tab.Item
+          title="Past Events"
           containerStyle={styles.tabContainer}
           titleStyle={styles.tabTitle}
         />
       </Tab>
-      <ScrollView>{index === 0 ? <Schedule /> : <Schedule />}</ScrollView>
+      <ScrollView>
+        {index === 0 ? <StoryList /> : <UpcommingEvents />}
+      </ScrollView>
     </SafeAreaView>
   );
 };

@@ -31,7 +31,7 @@ const initialState: NewsState = {
 };
 
 export const fetchNews = createAsyncThunk(
-  'pagination/fetchPageData',
+  'news/fetchPageData',
   async (_, {getState}: any) => {
     try {
       const {news} = getState();

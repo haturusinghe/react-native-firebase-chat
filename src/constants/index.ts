@@ -43,6 +43,9 @@ export const API_ROUTES = {
   NEWS: {
     GET_ALL: '/api/news',
   },
+  EVENTS: {
+    GET_ALL: '/api/event',
+  },
 };
 
 export enum HTTP_TYPES {

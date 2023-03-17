@@ -10,15 +10,17 @@ export const FeedElement = ({
   id,
   title,
   date,
+  url,
 }: {
   id: string;
   title: string;
   date: string;
+  url: string;
 }) => {
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails, {id: id}),
+      ...StackActions.push(url, {id: id}),
     });
   };
   return (

@@ -1,21 +1,22 @@
-import * as React from 'react';
+import React from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
-import {fetchNews, News, reloadNews} from '../../store/news';
+import {fetchStory, reloadStory, Story} from '../../store/story';
+import {CalendarFilterButton} from '../CalendarFilterButton';
 import {FeedElement} from '../FeedElement';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
 
-export const NewsFeed = () => {
+export const StoryList = () => {
   const {
     loading,
-    data: news,
+    data: stories,
     currentPage,
-  } = useAppSelector(store => store.news);
+  } = useAppSelector(store => store.stories);
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchNews());
+    dispatch(fetchStory());
   }, []);
 
   function handlePagination(event: any) {
@@ -23,7 +24,7 @@ export const NewsFeed = () => {
     const contentHeight = event.nativeEvent.contentSize.height;
     const layoutHeight = event.nativeEvent.layoutMeasurement.height;
     if (offsetY + layoutHeight >= contentHeight) {
-      dispatch(fetchNews());
+      dispatch(fetchStory());
     }
   }
 
@@ -35,20 +36,21 @@ export const NewsFeed = () => {
         refreshControl={
           <RefreshControl
             onRefresh={() => {
-              dispatch(reloadNews(''));
+              dispatch(reloadStory({startTime: undefined, endTime: undefined}));
             }}
             refreshing={loading}
             colors={['#9Bd35A', '#689F38']}
             progressBackgroundColor="#fff"
           />
         }>
-        {news?.map((news: News) => (
+        <CalendarFilterButton />
+        {stories?.map((story: Story) => (
           <FeedElement
-            key={news._id}
-            id={news._id}
-            title={news.title}
-            date={news.createdAt}
+            key={story._id}
+            id={story._id}
             url={routes.newsDetails}
+            title={story.storyTitle}
+            date={story.createdAt}
           />
         ))}
       </ScrollView>
