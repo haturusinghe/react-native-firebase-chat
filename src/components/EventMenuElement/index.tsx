@@ -2,8 +2,8 @@ import {StackActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {Text} from 'react-native-elements';
-import {routes} from '../../constants';
+import {Icon, Text} from 'react-native-elements';
+import {colors, routes} from '../../constants';
 import {Event} from '../../store/event';
 import {styles} from './style';
 
@@ -41,6 +41,14 @@ export const EventMenuElement = ({
         )} - ${moment(endTime).format('DD')} ${moment(startTime).format(
           'MMMM YYYY',
         )}`}</Text>
+      </View>
+      <View style={styles.flexEnd}>
+        <Icon
+          name="caret-right"
+          type="font-awesome"
+          size={25}
+          color={colors.black}
+        />
       </View>
     </TouchableOpacity>
   );
