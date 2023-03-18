@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {EventMenuElement} from '../../components/EventMenuElement';
 import {MyHeader} from '../../components/MyHeader';
+import {routes} from '../../constants';
 import {useAppSelector} from '../../hooks/useRedux';
 import {Event} from '../../store/event';
 
@@ -23,6 +24,7 @@ export const EventMenu = ({route}: any) => {
         subTitle="Event Schedule"
         startTime={event?.startTime}
         endTime={event?.endTime}
+        url={routes.sponsorList}
       />
       <EventMenuElement
         key={2}
@@ -31,6 +33,7 @@ export const EventMenu = ({route}: any) => {
         subTitle="Sponsors"
         startTime={event?.startTime}
         endTime={event?.endTime}
+        url={routes.sponsorList}
       />
     </ScrollView>
   );

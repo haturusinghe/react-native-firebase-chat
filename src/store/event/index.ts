@@ -1,17 +1,22 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {API_ROUTES, PAGE_SIZE} from '../../constants';
 import http from '../../services/http';
+import {User} from '../user';
 
+export interface Sponsor {
+  company: any;
+  status: string;
+  _id: string;
+}
 export interface Event {
   _id: string;
   title: string;
   description: string;
-  // creator: string;
-  // image?: string;
-  // attachments?: string[];
   createdAt: string;
   startTime: string;
   endTime: string;
+  sponsors?: Array<Sponsor>;
+  eventUsers?: Array<any>;
 }
 
 export interface EventState {
@@ -75,6 +80,32 @@ export const reloadEvents = createAsyncThunk(
   },
 );
 
+export const loadSponsors = createAsyncThunk(
+  'event/loadSponsors',
+  async ({_id}: {_id: string}, {getState}: any) => {
+    try {
+      const {events} = getState();
+      if (
+        events.data?.find((event: Event) => event._id === _id) &&
+        !events.data?.find((event: Event) => event._id === _id)[0]?.sponsors
+      ) {
+        const res = await http.get<any>(
+          `${API_ROUTES.EVENTS.GET_SPONSORS}/${_id}`,
+        );
+        return {
+          event: res.data.data,
+        };
+      } else {
+        return {
+          event: null,
+        };
+      }
+    } catch (err) {
+      return {event: null};
+    }
+  },
+);
+
 export const eventSlice = createSlice({
   name: 'events',
   initialState,
@@ -131,6 +162,30 @@ export const eventSlice = createSlice({
         },
       )
       .addCase(reloadEvents.rejected, state => {
+        state.loading = false;
+      })
+      .addCase(loadSponsors.pending, state => {
+        state.loading = true;
+      })
+      .addCase(
+        loadSponsors.fulfilled,
+        (state, action: PayloadAction<{event: Event}>) => {
+          state.loading = false;
+          state.data = state.data.map((element: Event) => {
+            if (element._id === action.payload.event?._id) {
+              console.log({event: action.payload.event});
+              return {
+                ...element,
+                sponsors: action.payload.event?.sponsors,
+                eventUsers: action.payload.event?.eventUsers,
+              };
+            } else {
+              return element;
+            }
+          });
+        },
+      )
+      .addCase(loadSponsors.rejected, state => {
         state.loading = false;
       });
   },

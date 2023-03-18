@@ -13,18 +13,19 @@ export const EventMenuElement = ({
   subTitle,
   startTime,
   endTime,
+  url,
 }: {
   id: string;
   title?: string;
   subTitle?: string;
   startTime?: string;
   endTime?: string;
+  url: string;
 }) => {
-  const [dateString, setDateString] = useState('');
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.newsDetails, {id: id}),
+      ...StackActions.push(url, {id: id}),
     });
   };
   // TODO change the date string if month or year is diff

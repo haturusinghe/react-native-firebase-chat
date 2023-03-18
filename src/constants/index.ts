@@ -24,6 +24,7 @@ export const routes = {
   chat: 'chat',
   storyDetails: 'storyDetails',
   eventMenu: 'eventMenu',
+  sponsorList: 'sponsorList',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
@@ -47,6 +48,7 @@ export const API_ROUTES = {
   },
   EVENTS: {
     GET_ALL: '/api/event',
+    GET_SPONSORS: '/api/event/sponsors',
   },
 };
 
