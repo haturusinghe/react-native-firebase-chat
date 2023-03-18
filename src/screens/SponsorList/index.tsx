@@ -36,6 +36,7 @@ export const SponsorList = ({route}: any) => {
                     imageUrl={sponsor.company.image}
                     round={false}
                     url={routes.companyProfile}
+                    params={sponsor.company}
                   />
                 ))}
           </View>
