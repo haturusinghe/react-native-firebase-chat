@@ -1,12 +1,36 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {API_ROUTES, PAGE_SIZE} from '../../constants';
 import http from '../../services/http';
-import {User} from '../user';
 
 export interface Sponsor {
   company: any;
   status: string;
   _id: string;
+}
+export enum sessionUserStatusType {
+  'accept' = 'accept',
+  'tentative' = 'tentative',
+  'decline' = 'decline',
+  'pending' = 'pending',
+}
+export interface UserSession {
+  _id: string;
+  user: string;
+  status: sessionUserStatusType;
+}
+export interface Session {
+  _id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  startTime: string;
+  endTime: string;
+  seats: number;
+  attachments: Array<string>;
+  location: string;
+  address?: string;
+  isMandatory: boolean;
+  usersession: Array<UserSession>;
 }
 export interface Event {
   _id: string;
@@ -17,6 +41,7 @@ export interface Event {
   endTime: string;
   sponsors?: Array<Sponsor>;
   eventUsers?: Array<any>;
+  sessions: Array<Session>;
 }
 
 export interface EventState {
@@ -63,11 +88,11 @@ export const reloadEvents = createAsyncThunk(
     {getState}: any,
   ) => {
     try {
-      const res = await http.get<any>(
-        `${
-          API_ROUTES.EVENTS.GET_ALL
-        }?page=${1}&pageSize=${PAGE_SIZE}&startTime=${startTime}&endTime=${endTime}`,
-      );
+      let url = `${API_ROUTES.EVENTS.GET_ALL}?page=${1}&pageSize=${PAGE_SIZE}`;
+      if (startTime && endTime) {
+        url = `${url}&startTime=${startTime}&endTime=${endTime}`;
+      }
+      const res = await http.get<any>(url);
       return {
         events: res.data.data,
         totalPages: res.data.totalPages,
@@ -112,6 +137,34 @@ export const eventSlice = createSlice({
   reducers: {
     setEvents: (state: EventState, action: PayloadAction<Event[]>): void => {
       state.data = action.payload;
+    },
+    sessionUserUpdate: (
+      state: EventState,
+      action: PayloadAction<{
+        eventId: string;
+        sessionId: string;
+        userSession: UserSession;
+      }>,
+    ): void => {
+      state.data = state.data.map((event: Event) => {
+        if (event._id === action.payload.eventId) {
+          event.sessions = event.sessions.map((session: Session) => {
+            if (session._id === action.payload.sessionId) {
+              const index = session.usersession.findIndex(
+                (userSession: UserSession) =>
+                  userSession._id === action.payload.userSession._id,
+              );
+              if (index === -1) {
+                session.usersession.push(action.payload.userSession);
+              } else {
+                session.usersession[index] = action.payload.userSession;
+              }
+            }
+            return session;
+          });
+        }
+        return event;
+      });
     },
   },
   extraReducers: builder => {
@@ -173,7 +226,6 @@ export const eventSlice = createSlice({
           state.loading = false;
           state.data = state.data.map((element: Event) => {
             if (element._id === action.payload.event?._id) {
-              console.log({event: action.payload.event});
               return {
                 ...element,
                 sponsors: action.payload.event?.sponsors,
@@ -191,6 +243,6 @@ export const eventSlice = createSlice({
   },
 });
 
-export const {setEvents} = eventSlice.actions;
+export const {setEvents, sessionUserUpdate} = eventSlice.actions;
 
 export default eventSlice.reducer;

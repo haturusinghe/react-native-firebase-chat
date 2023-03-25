@@ -19,6 +19,8 @@ import {StoryDetails} from '../../screens/StoryDetails';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {EventMenu} from '../../screens/EventMenu';
 import {SponsorList} from '../../screens/SponsorList';
+import {SessionList} from '../../screens/SessionList';
+import {SafeAreaView} from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,79 +32,86 @@ export const Navigator = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name={routes.home}
-          component={BottomTabs}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.login}
-          component={LoginPage}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.forgotPassword}
-          component={ForgotPasswordPage}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.newsDetails}
-          component={NewsDetails}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.scheduleDetails}
-          component={EventScheduleDetails}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.participants}
-          component={Participants}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.profile}
-          component={Profile}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.subDirectory}
-          component={SubDirectory}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.about}
-          component={About}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.companyProfile}
-          component={CompanyProfile}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.chat}
-          component={Chat}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.storyDetails}
-          component={StoryDetails}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.eventMenu}
-          component={EventMenu}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name={routes.sponsorList}
-          component={SponsorList}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={{flex: 1}}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name={routes.home}
+            component={BottomTabs}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.login}
+            component={LoginPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.forgotPassword}
+            component={ForgotPasswordPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.newsDetails}
+            component={NewsDetails}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.scheduleDetails}
+            component={EventScheduleDetails}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.participants}
+            component={Participants}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.profile}
+            component={Profile}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.subDirectory}
+            component={SubDirectory}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.about}
+            component={About}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.companyProfile}
+            component={CompanyProfile}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.chat}
+            component={Chat}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.storyDetails}
+            component={StoryDetails}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.eventMenu}
+            component={EventMenu}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.sponsorList}
+            component={SponsorList}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.sessionList}
+            component={SessionList}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 };

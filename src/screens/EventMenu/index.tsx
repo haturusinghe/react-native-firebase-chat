@@ -24,7 +24,7 @@ export const EventMenu = ({route}: any) => {
         subTitle="Event Schedule"
         startTime={event?.startTime}
         endTime={event?.endTime}
-        url={routes.sponsorList}
+        url={routes.sessionList}
       />
       <EventMenuElement
         key={2}

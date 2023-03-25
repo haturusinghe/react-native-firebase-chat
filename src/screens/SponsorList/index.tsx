@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
-import {Text} from 'react-native-elements';
-import {shallowEqual, useSelector} from 'react-redux';
 import {LoadingWrapper} from '../../components/LoadingWrapper';
 import {MyHeader} from '../../components/MyHeader';
 import {ParticipantElement} from '../../components/ParticipantElement';
 import {routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, loadSponsors, Sponsor} from '../../store/event';
-import {store} from '../../store/store';
 
 export const SponsorList = ({route}: any) => {
   const {id} = route.params;
