@@ -7,8 +7,10 @@ import {useAppSelector} from '../../hooks/useRedux';
 import {Event} from '../../store/event';
 
 export const EventMenu = ({route}: any) => {
-  const {id} = route.params;
-  const {data: events} = useAppSelector(store => store.events);
+  const {id, isPast} = route.params;
+  const {data: events} = useAppSelector(store =>
+    isPast ? store.pastEvents : store.events,
+  );
   const [event, setEvent] = useState<Event | undefined>(
     events.find(element => element._id === id),
   );
@@ -25,6 +27,7 @@ export const EventMenu = ({route}: any) => {
         startTime={event?.startTime}
         endTime={event?.endTime}
         url={routes.sessionList}
+        isPast={isPast}
       />
       <EventMenuElement
         key={2}
@@ -34,6 +37,7 @@ export const EventMenu = ({route}: any) => {
         startTime={event?.startTime}
         endTime={event?.endTime}
         url={routes.sponsorList}
+        isPast={isPast}
       />
     </ScrollView>
   );

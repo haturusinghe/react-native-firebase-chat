@@ -18,14 +18,18 @@ import {styles} from './style';
 export const SessionButtonSet = ({
   sessionId,
   eventId,
+  isPast,
 }: {
   sessionId: string;
   eventId: string;
+  isPast: boolean;
 }) => {
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(store => store.user);
-  const {data: event} = useAppSelector(store => store.events);
+  const {data: event} = useAppSelector(store =>
+    isPast ? store.pastEvents : store.events,
+  );
   const [userState, setUserState] = useState<sessionUserStatusType>(
     event
       .find((event: Event) => event._id === eventId)
@@ -56,7 +60,7 @@ export const SessionButtonSet = ({
   }, [event]);
 
   const updateState = async (newState: sessionUserStatusType) => {
-    if (newState !== userState) {
+    if (newState !== userState && !isPast) {
       const res = await mutate(
         {
           eventId,
@@ -82,6 +86,7 @@ export const SessionButtonSet = ({
       <View style={[styles.row, styles.buttonSet]}>
         <Chip
           title="Accept"
+          disabled={isPast}
           onPress={() => updateState(sessionUserStatusType.accept)}
           type={
             userState === sessionUserStatusType.accept ? 'solid' : 'outline'
@@ -116,6 +121,7 @@ export const SessionButtonSet = ({
         />
         <Chip
           title="Tentative"
+          disabled={isPast}
           onPress={() => updateState(sessionUserStatusType.tentative)}
           type={
             userState === sessionUserStatusType.tentative ? 'solid' : 'outline'
@@ -150,6 +156,7 @@ export const SessionButtonSet = ({
         />
         <Chip
           title="Decline"
+          disabled={isPast}
           onPress={() => updateState(sessionUserStatusType.decline)}
           type={
             userState === sessionUserStatusType.decline ? 'solid' : 'outline'

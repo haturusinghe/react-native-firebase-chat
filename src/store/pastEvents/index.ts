@@ -1,57 +1,7 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {API_ROUTES, PAGE_SIZE} from '../../constants';
 import http from '../../services/http';
-
-export interface Sponsor {
-  company: any;
-  status: string;
-  _id: string;
-}
-export enum sessionUserStatusType {
-  'accept' = 'accept',
-  'tentative' = 'tentative',
-  'decline' = 'decline',
-  'pending' = 'pending',
-}
-export interface UserSession {
-  _id: string;
-  user: string;
-  status: sessionUserStatusType;
-}
-export interface Session {
-  _id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  startTime: string;
-  endTime: string;
-  seats: number;
-  attachments: Array<string>;
-  location: string;
-  address?: string;
-  isMandatory: boolean;
-  usersession: Array<UserSession>;
-}
-export interface Event {
-  _id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  startTime: string;
-  endTime: string;
-  sponsors?: Array<Sponsor>;
-  eventUsers?: Array<any>;
-  sessions: Array<Session>;
-}
-
-export interface EventState {
-  data: Event[];
-  loading: boolean;
-  currentPage: number;
-  totalPages: number;
-  startTime?: Date;
-  endTime?: Date;
-}
+import {Event, EventState} from '../event';
 
 const initialState: EventState = {
   data: [],
@@ -60,23 +10,20 @@ const initialState: EventState = {
   totalPages: 10,
 };
 
-export const fetchEvents = createAsyncThunk(
-  'events/fetchPageData',
+export const fetchPastEvents = createAsyncThunk(
+  'pastEvents/fetchPageData',
   async (_, {getState}: any) => {
     try {
-      const {events} = getState();
-      console.log(events.totalPages, events.currentPage);
-      if (events.totalPages > events.currentPage) {
+      const {pastEvents} = getState();
+      if (pastEvents.totalPages > pastEvents.currentPage) {
         const res = await http.get<any>(
           `${API_ROUTES.EVENTS.GET_ALL}?page=${
-            events.currentPage + 1
-          }&pageSize=${PAGE_SIZE}`,
+            pastEvents.currentPage + 1
+          }&pageSize=${PAGE_SIZE}&pastEvents=true`,
         );
-        console.log('total pages', res.data.totalPages);
-
         return {events: res.data.data, totalPages: res.data.totalPages};
       } else {
-        return {events: [], totalPages: events.totalPages};
+        return {events: [], totalPages: pastEvents.totalPages};
       }
     } catch (err) {
       return {events: [], totalPages: 0};
@@ -84,14 +31,16 @@ export const fetchEvents = createAsyncThunk(
   },
 );
 
-export const reloadEvents = createAsyncThunk(
-  'pagination/reloadEvents',
+export const reloadPastEvents = createAsyncThunk(
+  'pastEvents/reloadEvents',
   async (
     {startTime, endTime}: {startTime?: Date; endTime?: Date},
     {getState}: any,
   ) => {
     try {
-      let url = `${API_ROUTES.EVENTS.GET_ALL}?page=${1}&pageSize=${PAGE_SIZE}`;
+      let url = `${
+        API_ROUTES.EVENTS.GET_ALL
+      }?page=${1}&pageSize=${PAGE_SIZE}&pastEvents=true`;
       if (startTime && endTime) {
         url = `${url}&startTime=${startTime}&endTime=${endTime}`;
       }
@@ -108,14 +57,14 @@ export const reloadEvents = createAsyncThunk(
   },
 );
 
-export const loadSponsors = createAsyncThunk(
-  'event/loadSponsors',
+export const loadPastSponsors = createAsyncThunk(
+  'pastEvents/loadSponsors',
   async ({_id}: {_id: string}, {getState}: any) => {
     try {
-      const {events} = getState();
+      const {pastEvents} = getState();
       if (
-        events.data?.find((event: Event) => event._id === _id) &&
-        !events.data?.find((event: Event) => event._id === _id)[0]?.sponsors
+        pastEvents.data?.find((event: Event) => event._id === _id) &&
+        !pastEvents.data?.find((event: Event) => event._id === _id)[0]?.sponsors
       ) {
         const res = await http.get<any>(
           `${API_ROUTES.EVENTS.GET_SPONSORS}/${_id}`,
@@ -134,49 +83,24 @@ export const loadSponsors = createAsyncThunk(
   },
 );
 
-export const eventSlice = createSlice({
-  name: 'events',
+export const pastEventSlice = createSlice({
+  name: 'pastEvents',
   initialState,
   reducers: {
-    setEvents: (state: EventState, action: PayloadAction<Event[]>): void => {
-      state.data = action.payload;
-    },
-    sessionUserUpdate: (
+    setPastEvents: (
       state: EventState,
-      action: PayloadAction<{
-        eventId: string;
-        sessionId: string;
-        userSession: UserSession;
-      }>,
+      action: PayloadAction<Event[]>,
     ): void => {
-      state.data = state.data.map((event: Event) => {
-        if (event._id === action.payload.eventId) {
-          event.sessions = event.sessions.map((session: Session) => {
-            if (session._id === action.payload.sessionId) {
-              const index = session.usersession.findIndex(
-                (userSession: UserSession) =>
-                  userSession._id === action.payload.userSession._id,
-              );
-              if (index === -1) {
-                session.usersession.push(action.payload.userSession);
-              } else {
-                session.usersession[index] = action.payload.userSession;
-              }
-            }
-            return session;
-          });
-        }
-        return event;
-      });
+      state.data = action.payload;
     },
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchEvents.pending, state => {
+      .addCase(fetchPastEvents.pending, state => {
         state.loading = true;
       })
       .addCase(
-        fetchEvents.fulfilled,
+        fetchPastEvents.fulfilled,
         (
           state,
           action: PayloadAction<{events: Event[]; totalPages: number}>,
@@ -187,15 +111,15 @@ export const eventSlice = createSlice({
           state.totalPages = action.payload.totalPages;
         },
       )
-      .addCase(fetchEvents.rejected, state => {
+      .addCase(fetchPastEvents.rejected, state => {
         state.loading = false;
       })
-      .addCase(reloadEvents.pending, state => {
+      .addCase(reloadPastEvents.pending, state => {
         state.loading = true;
         state.data = [];
       })
       .addCase(
-        reloadEvents.fulfilled,
+        reloadPastEvents.fulfilled,
         (
           state,
           action: PayloadAction<{
@@ -217,14 +141,14 @@ export const eventSlice = createSlice({
             : state.endTime;
         },
       )
-      .addCase(reloadEvents.rejected, state => {
+      .addCase(reloadPastEvents.rejected, state => {
         state.loading = false;
       })
-      .addCase(loadSponsors.pending, state => {
+      .addCase(loadPastSponsors.pending, state => {
         state.loading = true;
       })
       .addCase(
-        loadSponsors.fulfilled,
+        loadPastSponsors.fulfilled,
         (state, action: PayloadAction<{event: Event}>) => {
           state.loading = false;
           state.data = state.data.map((element: Event) => {
@@ -240,12 +164,12 @@ export const eventSlice = createSlice({
           });
         },
       )
-      .addCase(loadSponsors.rejected, state => {
+      .addCase(loadPastSponsors.rejected, state => {
         state.loading = false;
       });
   },
 });
 
-export const {setEvents, sessionUserUpdate} = eventSlice.actions;
+export const {setPastEvents} = pastEventSlice.actions;
 
-export default eventSlice.reducer;
+export default pastEventSlice.reducer;

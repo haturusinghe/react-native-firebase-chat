@@ -3,16 +3,22 @@ import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-elements';
-import {routes} from '../../constants';
+import {colors, routes} from '../../constants';
 import {Event} from '../../store/event';
 import {styles} from './style';
 
-export const EventElement = ({data: event}: {data: Event}) => {
+export const EventElement = ({
+  data: event,
+  isPast = false,
+}: {
+  data: Event;
+  isPast?: boolean;
+}) => {
   const [dateString, setDateString] = useState('');
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(routes.eventMenu, {id: event._id}),
+      ...StackActions.push(routes.eventMenu, {id: event._id, isPast}),
     });
   };
   useEffect(() => {
@@ -35,7 +41,11 @@ export const EventElement = ({data: event}: {data: Event}) => {
 
   return (
     <TouchableOpacity style={styles.card} onPress={navigateDetailsPage}>
-      <View style={styles.dateRangeSection}>
+      <View
+        style={[
+          styles.dateRangeSection,
+          {backgroundColor: isPast ? colors.grey : colors.primary},
+        ]}>
         <Text style={styles.dateRange}>
           {`${moment(event.startTime).format('DD')} - ${moment(
             event.endTime,

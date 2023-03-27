@@ -13,10 +13,12 @@ export const SessionListElement = ({
   data: session,
   index,
   eventId,
+  isPast,
 }: {
   data: Session;
   eventId: string;
   index: number;
+  isPast: boolean;
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -27,7 +29,11 @@ export const SessionListElement = ({
         setIsVisible(!isVisible);
       }}>
       <View style={styles.row}>
-        <View style={styles.dateRangeSection}>
+        <View
+          style={[
+            styles.dateRangeSection,
+            {backgroundColor: isPast ? colors.grey : colors.primary},
+          ]}>
           <Text
             style={[
               styles.dateRange,
@@ -114,7 +120,11 @@ export const SessionListElement = ({
                   </View>
                 </View>
               </View>
-              <SessionButtonSet sessionId={session._id} eventId={eventId} />
+              <SessionButtonSet
+                sessionId={session._id}
+                eventId={eventId}
+                isPast={isPast}
+              />
             </View>
           )}
         </View>

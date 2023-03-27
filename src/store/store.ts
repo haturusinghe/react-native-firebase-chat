@@ -3,12 +3,14 @@ import userReducer from './user/index';
 import newsReducer from './news/index';
 import eventReducer from './event/index';
 import storyReducer from './story/index';
+import pastEventReducer from './pastEvents/index';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     news: newsReducer,
     events: eventReducer,
+    pastEvents: pastEventReducer,
     stories: storyReducer,
   },
 });

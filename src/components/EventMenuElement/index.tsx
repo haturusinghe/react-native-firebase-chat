@@ -14,6 +14,7 @@ export const EventMenuElement = ({
   startTime,
   endTime,
   url,
+  isPast,
 }: {
   id: string;
   title?: string;
@@ -21,18 +22,23 @@ export const EventMenuElement = ({
   startTime?: string;
   endTime?: string;
   url: string;
+  isPast: boolean;
 }) => {
   const navigation = useNavigation();
   const navigateDetailsPage = () => {
     navigation.dispatch({
-      ...StackActions.push(url, {id: id}),
+      ...StackActions.push(url, {id: id, isPast}),
     });
   };
   // TODO change the date string if month or year is diff
 
   return (
     <TouchableOpacity style={styles.card} onPress={navigateDetailsPage}>
-      <View style={styles.dateRangeSection}>
+      <View
+        style={[
+          styles.dateRangeSection,
+          {backgroundColor: isPast ? colors.grey : colors.primary},
+        ]}>
         <Text style={styles.dateRange}>{subTitle}</Text>
       </View>
       <View>

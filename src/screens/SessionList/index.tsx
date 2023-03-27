@@ -10,8 +10,10 @@ import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, loadSponsors, Session, Sponsor} from '../../store/event';
 
 export const SessionList = ({route}: any) => {
-  const {id} = route.params;
-  const {data: events, loading} = useAppSelector((store: any) => store.events);
+  const {id, isPast} = route.params;
+  const {data: events, loading} = useAppSelector((store: any) =>
+    isPast ? store.pastEvents : store.events,
+  );
   const [event, setEvent] = useState<Event | undefined>(
     events.find((element: Event) => element._id === id),
   );
@@ -27,7 +29,7 @@ export const SessionList = ({route}: any) => {
       <ScrollView>
         <LoadingWrapper loading={loading}>
           <View>
-            {event && <EventElement data={event} />}
+            {event && <EventElement data={event} isPast={isPast} />}
             {event &&
               event.sessions?.map((session: Session, index: number) => (
                 <SessionListElement
@@ -35,6 +37,7 @@ export const SessionList = ({route}: any) => {
                   data={session}
                   index={index}
                   eventId={event._id}
+                  isPast={isPast}
                 />
               ))}
           </View>
