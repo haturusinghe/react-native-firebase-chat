@@ -65,15 +65,12 @@ export const fetchEvents = createAsyncThunk(
   async (_, {getState}: any) => {
     try {
       const {events} = getState();
-      console.log(events.totalPages, events.currentPage);
       if (events.totalPages > events.currentPage) {
         const res = await http.get<any>(
           `${API_ROUTES.EVENTS.GET_ALL}?page=${
             events.currentPage + 1
           }&pageSize=${PAGE_SIZE}`,
         );
-        console.log('total pages', res.data.totalPages);
-
         return {events: res.data.data, totalPages: res.data.totalPages};
       } else {
         return {events: [], totalPages: events.totalPages};

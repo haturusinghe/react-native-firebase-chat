@@ -4,6 +4,7 @@ import newsReducer from './news/index';
 import eventReducer from './event/index';
 import storyReducer from './story/index';
 import pastEventReducer from './pastEvents/index';
+import mySessionReducer from './mySchedule/index';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     events: eventReducer,
     pastEvents: pastEventReducer,
     stories: storyReducer,
+    mySessions: mySessionReducer,
   },
 });
 

@@ -50,8 +50,10 @@ export const API_ROUTES = {
   EVENTS: {
     GET_ALL: '/api/event',
     GET_SPONSORS: '/api/event/sponsors',
+    GET_MY_SCHEDULE: '/api/event/mySessions',
     GET_PARTICIPANTS: '/api/event/session/users',
     UPDATE_USER_SESSION: '/api/event/session/user',
+    UPDATE_USER_SESSION_BY_ID: '/api/event/sessionUser',
   },
 };
 

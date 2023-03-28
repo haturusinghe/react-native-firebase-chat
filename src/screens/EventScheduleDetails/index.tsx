@@ -7,9 +7,7 @@ export const EventScheduleDetails = () => {
   return (
     <SafeAreaView>
       <MyHeader title="Event Schedule Details" />
-      <ScrollView>
-        <EventDetailsElement />
-      </ScrollView>
+      <ScrollView>{/* <EventDetailsElement /> */}</ScrollView>
     </SafeAreaView>
   );
 };

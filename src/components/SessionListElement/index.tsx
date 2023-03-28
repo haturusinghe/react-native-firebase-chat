@@ -91,7 +91,7 @@ export const SessionListElement = ({
             <Text style={styles.title}>Address: </Text>
             {session.address}
           </Text>
-          {!session.isMandatory ? (
+          {session.isMandatory ? (
             <Text style={[styles.marginTop, styles.SubContentText]}>
               <Text style={styles.title}>No of Seats :</Text>
               {session.seats}

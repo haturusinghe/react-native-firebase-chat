@@ -4,6 +4,7 @@ import {withAuth} from '../../hoc/withAuth';
 import {Directory} from '../../screens/Directory';
 import {EventSchedule} from '../../screens/EventSchedule';
 import HomeScreen from '../../screens/Home';
+import {MySchedule} from '../../screens/MySchedule';
 import {NotificationPage} from '../../screens/NotificationPage';
 
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,17 @@ const BottomTabs = () => {
           headerShown: false,
           tabBarIcon: () => {
             return <Icon name="event" />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Schedule"
+        component={MySchedule}
+        options={{
+          title: 'Schedule',
+          headerShown: false,
+          tabBarIcon: () => {
+            return <Icon name="tasks" type="font-awesome" />;
           },
         }}
       />
