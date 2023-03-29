@@ -8,8 +8,8 @@ export interface MyScheduleState {
   loading: boolean;
   currentPage: number;
   totalPages: number;
-  startTime?: Date;
-  endTime?: Date;
+  startTime?: string;
+  endTime?: string;
 }
 
 const initialState: MyScheduleState = {
@@ -25,11 +25,14 @@ export const fetchSchedule = createAsyncThunk(
     try {
       const {mySessions} = getState();
       if (mySessions.totalPages > mySessions.currentPage) {
-        const res = await http.get<any>(
-          `${API_ROUTES.EVENTS.GET_MY_SCHEDULE}?page=${
-            mySessions.currentPage + 1
-          }&pageSize=${PAGE_SIZE}`,
-        );
+        let url = `${API_ROUTES.EVENTS.GET_MY_SCHEDULE}?page=${
+          mySessions.currentPage + 1
+        }&pageSize=${PAGE_SIZE}`;
+        if (mySessions.startTime && mySessions.endTime) {
+          url = `${url}&startTime=${mySessions.startTime}&endTime=${mySessions.endTime}`;
+        }
+        const res = await http.get<any>(url);
+
         return {sessions: res.data.sessions, totalPages: res.data.totalPages};
       } else {
         return {sessions: [], totalPages: mySessions.totalPages};
@@ -42,14 +45,23 @@ export const fetchSchedule = createAsyncThunk(
 
 export const reloadSchedule = createAsyncThunk(
   'mySchedule/reload',
-  async (_, {getState}: any) => {
+  async (
+    {startTime, endTime}: {startTime?: Date; endTime?: Date},
+    {getState}: any,
+  ) => {
     try {
-      const res = await http.get<any>(
-        `${API_ROUTES.EVENTS.GET_MY_SCHEDULE}?page=${1}&pageSize=${PAGE_SIZE}`,
-      );
+      let url = `${
+        API_ROUTES.EVENTS.GET_MY_SCHEDULE
+      }?page=${1}&pageSize=${PAGE_SIZE}`;
+      if (startTime && endTime) {
+        url = `${url}&startTime=${startTime}&endTime=${endTime}`;
+      }
+      const res = await http.get<any>(url);
       return {
         sessions: res.data.sessions,
         totalPages: res.data.totalPages,
+        startTime: startTime?.toString(),
+        endTime: endTime?.toString(),
       };
     } catch (err) {
       return {sessions: [], totalPages: 0};
@@ -110,13 +122,22 @@ export const myScheduleSlice = createSlice({
           action: PayloadAction<{
             sessions: Session[];
             totalPages: number;
-            searchTerm?: string;
+            startTime?: string;
+            endTime?: string;
           }>,
         ) => {
+          console.log(action.payload?.startTime);
+
           state.loading = false;
           state.data = action.payload.sessions;
           state.currentPage = 1;
           state.totalPages = action.payload.totalPages;
+          state.startTime = action.payload.startTime
+            ? action.payload.startTime
+            : state.startTime;
+          state.endTime = action.payload.endTime
+            ? action.payload.endTime
+            : state.endTime;
         },
       )
       .addCase(reloadSchedule.rejected, state => {

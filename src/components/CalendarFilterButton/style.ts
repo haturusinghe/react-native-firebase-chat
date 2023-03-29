@@ -31,4 +31,10 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.black,
   },
+  timeTitle: {
+    minWidth: 300,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: colors.grey,
+  },
 });

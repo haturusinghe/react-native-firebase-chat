@@ -13,7 +13,12 @@ import {fetchSchedule, reloadSchedule} from '../../store/mySchedule';
 
 export const MySchedule = () => {
   const dispatch = useAppDispatch();
-  const {data: sessions, loading} = useAppSelector(store => store.mySessions);
+  const {
+    data: sessions,
+    loading,
+    startTime,
+    endTime,
+  } = useAppSelector(store => store.mySessions);
 
   useEffect(() => {
     dispatch(fetchSchedule());
@@ -38,14 +43,18 @@ export const MySchedule = () => {
           refreshControl={
             <RefreshControl
               onRefresh={() => {
-                dispatch(reloadSchedule());
+                dispatch(reloadSchedule({startTime, endTime}));
               }}
               refreshing={loading}
               colors={['#9Bd35A', '#689F38']}
               progressBackgroundColor="#fff"
             />
           }>
-          <CalendarFilterButton />
+          <CalendarFilterButton
+            reload={(fromDate: Date, toDate: Date) => {
+              dispatch(reloadSchedule({startTime: fromDate, endTime: toDate}));
+            }}
+          />
           {sessions?.map((session: Session) => (
             <EventDetailsElement key={session._id} session={session} />
           ))}

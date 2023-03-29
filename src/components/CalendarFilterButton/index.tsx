@@ -1,50 +1,57 @@
 import moment from 'moment';
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {Calendar} from 'react-native-calendars';
 import {Icon, Overlay, Text} from 'react-native-elements';
 import {colors} from '../../constants';
 import {styles} from './style';
-import * as yup from 'yup';
-import {Formik} from 'formik';
-import {InputField} from '../InputField';
-import {X_Button} from '../Button';
+import DatePicker from 'react-native-date-picker';
 
-interface TimeType {
-  from: number;
-  to: number;
+enum FilterTypes {
+  'today' = 'Today',
+  'yesterday' = 'Yesterday',
+  'customDate' = 'Custom Date',
 }
 
-export const CalendarFilterButton = () => {
-  const TimeValidationSchema = yup.object().shape({
-    from: yup
-      .number()
-      .min(0, 'Mininum at least 0')
-      .max(23, 'Allow maximum is 23')
-      .required('Email is Required'),
-    to: yup
-      .number()
-      .max(0, 'Mininum at least 0')
-      .max(24, 'Allow maximum is 23')
-      .required('Email is Required'),
-  });
-  const [visible, setVisible] = React.useState(false);
-  const [markedDate, setMarkedDate] = React.useState({
-    [moment().format('YYYY-MM-DD')]: {
-      selected: true,
-      selectedColor: colors.primary_dark,
-    },
-  });
+export const CalendarFilterButton = ({
+  reload,
+}: {
+  reload: (fromDate: Date, toDate: Date) => void;
+}) => {
+  const [visible, setVisible] = useState(false);
+  const [filter, setFilter] = useState<FilterTypes | null>();
+
+  const [fromDate, setFromDate] = useState(new Date());
+  const [fromDateOpen, setFromDateOpen] = useState(false);
+
+  const [toDate, setToDate] = useState(new Date());
+  const [toDateOpen, setToDateOpen] = useState(false);
 
   const toggleOverlay = () => {
     setVisible(!visible);
   };
-  const onDayPress = (day: string) => {
-    setMarkedDate({
-      ...markedDate,
-      [day]: {selected: true, selectedColor: colors.primary_dark},
-    });
-  };
+
+  useEffect(() => {
+    if (filter === FilterTypes.today) {
+      setFromDate(new Date(moment(new Date()).format('YYYY-MM-DD')));
+      setToDate(
+        new Date(moment(new Date()).add(1, 'days').format('YYYY-MM-DD')),
+      );
+    } else if (filter === FilterTypes.yesterday) {
+      setFromDate(
+        new Date(moment(new Date()).add(-1, 'days').format('YYYY-MM-DD')),
+      );
+      setToDate(new Date(moment(new Date()).format('YYYY-MM-DD')));
+    }
+  }, [filter]);
+
+  useEffect(() => {
+    if (moment(fromDate).isBefore(toDate)) {
+      // reload
+      console.log(fromDate, toDate);
+      reload(fromDate, toDate);
+    }
+  }, [fromDate, toDate]);
+
   return (
     <View>
       <TouchableOpacity style={styles.filterSelection} onPress={toggleOverlay}>
@@ -62,98 +69,77 @@ export const CalendarFilterButton = () => {
           color={colors.white}
         />
       </TouchableOpacity>
+      {filter === FilterTypes.customDate && (
+        <View>
+          <TouchableOpacity
+            style={styles.filterSelection}
+            onPress={() => setFromDateOpen(true)}>
+            <Text style={styles.filterText}>
+              {'From ' + moment(fromDate).format('YYYY-MM-DD HH:mm a')}
+            </Text>
+            <DatePicker
+              modal
+              open={fromDateOpen}
+              date={fromDate}
+              onConfirm={date => {
+                setFromDateOpen(false);
+                setFromDate(date);
+              }}
+              onCancel={() => {
+                setFromDateOpen(false);
+              }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.filterSelection}
+            onPress={() => setToDateOpen(true)}>
+            <Text style={styles.filterText}>
+              {'To ' + moment(toDate).format('YYYY-MM-DD HH:mm a')}
+            </Text>
+            <DatePicker
+              modal
+              open={toDateOpen}
+              date={toDate}
+              minimumDate={fromDate}
+              onConfirm={date => {
+                setToDateOpen(false);
+                setToDate(date);
+              }}
+              onCancel={() => {
+                setToDateOpen(false);
+              }}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <View style={styles.FromDateView}>
-          <Text style={styles.FromDate}>From Date</Text>
-          <Text style={styles.FromDate}>
-            {moment(new Date()).format('DD/MM/YYYY')}
-          </Text>
+        <View style={styles.timeTitle}>
+          <TouchableOpacity
+            onPress={() => {
+              setFilter(FilterTypes.today);
+              setVisible(false);
+            }}>
+            <Text>{FilterTypes.today}</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.FromDateView}>
-          <Text style={styles.FromDate}>To Date</Text>
-          <Text style={styles.FromDate}>
-            {moment(new Date()).format('DD/MM/YYYY')}
-          </Text>
+        <View style={styles.timeTitle}>
+          <TouchableOpacity
+            onPress={() => {
+              setFilter(FilterTypes.yesterday);
+              setVisible(false);
+            }}>
+            <Text>{FilterTypes.yesterday}</Text>
+          </TouchableOpacity>
         </View>
-        <Calendar
-          theme={{
-            arrowColor: colors.black,
-            calendarBackground: colors.white,
-            textDayFontWeight: '300',
-            textMonthFontWeight: 'bold',
-            textDayHeaderFontWeight: '300',
-            textDayFontSize: 14,
-            textMonthFontSize: 14,
-            textDayHeaderFontSize: 14,
-          }}
-          style={{backgroundColor: colors.white}}
-          minDate={moment().add(-30, 'days').format('YYYY-MM-DD').toString()}
-          maxDate={moment().add(30, 'days').format('YYYY-MM-DD').toString()}
-          headerStyle={{backgroundColor: colors.white}}
-          current={moment().format('YYYY-MM-DD').toString()}
-          markedDates={markedDate}
-          onDayPress={day => {
-            onDayPress(day.dateString);
-          }}
-        />
-        <Formik
-          validationSchema={TimeValidationSchema}
-          initialValues={{from: 0, to: 1}}
-          validateOnChange={true}
-          // onReset={(value: any)=> {console.log(value);
-          //   email:"he"
-          // }}
-          onSubmit={(values: TimeType, {resetForm}) => {}}>
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-            setFieldValue,
-            isValid,
-            setFieldTouched,
-            isSubmitting,
-          }) => (
-            <>
-              <View>
-                <InputField
-                  placeholder={'From'}
-                  keyboardType="number-pad"
-                  autoCapitalize="none"
-                  value={values.from}
-                  onChangeText={(value: string) => setFieldValue('from', value)}
-                  onBlur={() => setFieldTouched('from')}
-                  editable={!isSubmitting}
-                  errorMessage={
-                    touched.from && errors.from ? errors.from : undefined
-                  }
-                />
-                <InputField
-                  onChangeText={handleChange('to')}
-                  onBlur={handleBlur('to')}
-                  autoCapitalize="none"
-                  placeholder="to"
-                  editable={!isSubmitting}
-                  value={values.to}
-                  errorMessage={touched.to && errors.to ? errors.to : undefined}
-                />
-                {/* <CheckBox checked title="Keep me signed in" /> */}
-                <View style={{marginVertical: 10}}>
-                  <X_Button
-                    onPress={handleSubmit}
-                    disabled={isSubmitting}
-                    title={'Search'}
-                    color={colors.grey}
-                    fontSize={14}
-                    borderWidth={1.5}
-                  />
-                </View>
-              </View>
-            </>
-          )}
-        </Formik>
+        <View style={styles.timeTitle}>
+          <TouchableOpacity
+            onPress={() => {
+              setFilter(FilterTypes.customDate);
+              setVisible(false);
+            }}>
+            <Text>{FilterTypes.customDate}</Text>
+          </TouchableOpacity>
+        </View>
       </Overlay>
     </View>
   );
