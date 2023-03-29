@@ -35,7 +35,7 @@ export const fetchPastEvents = createAsyncThunk(
 
 export const reloadPastEvents = createAsyncThunk(
   'pastEvents/reloadEvents',
-  async ({searchTerm}: {searchTerm?: string}, {getState}: any) => {
+  async (searchTerm?: string) => {
     try {
       let url = `${
         API_ROUTES.EVENTS.GET_ALL
