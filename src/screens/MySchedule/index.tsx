@@ -43,7 +43,12 @@ export const MySchedule = () => {
           refreshControl={
             <RefreshControl
               onRefresh={() => {
-                dispatch(reloadSchedule({startTime, endTime}));
+                dispatch(
+                  reloadSchedule({
+                    startTime: startTime ? new Date(startTime) : undefined,
+                    endTime: endTime ? new Date(endTime) : undefined,
+                  }),
+                );
               }}
               refreshing={loading}
               colors={['#9Bd35A', '#689F38']}
