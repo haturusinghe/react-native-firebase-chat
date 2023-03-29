@@ -3,7 +3,6 @@ import {SafeAreaView, ScrollView} from 'react-native';
 import {Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
 import {PastEvents} from '../../components/PastEvents';
-import {Schedule} from '../../components/Schedule';
 import {StoryList} from '../../components/StoryList';
 import {UpcommingEvents} from '../../components/UpcommingEvents';
 import {styles} from './style';

@@ -3,7 +3,6 @@ import {RefreshControl, ScrollView} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, reloadEvents} from '../../store/event';
 import {fetchPastEvents} from '../../store/pastEvents';
-import {CalendarFilterButton} from '../CalendarFilterButton';
 import {EventElement} from '../EventElement';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
 

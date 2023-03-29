@@ -44,7 +44,11 @@ export const UpcommingEvents = () => {
             progressBackgroundColor="#fff"
           />
         }>
-        <CalendarFilterButton />
+        <CalendarFilterButton
+          reload={(fromDate: Date, toDate: Date) => {
+            dispatch(reloadEvents({startTime: fromDate, endTime: toDate}));
+          }}
+        />
         {events?.map((event: Event) => (
           <EventElement key={event._id} data={event} />
         ))}

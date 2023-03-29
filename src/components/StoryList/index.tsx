@@ -4,7 +4,6 @@ import {Button} from 'react-native-elements';
 import {colors, routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {fetchStory, reloadStory, Story} from '../../store/story';
-import {CalendarFilterButton} from '../CalendarFilterButton';
 import {FeedElement} from '../FeedElement';
 import {InputField} from '../InputField';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';

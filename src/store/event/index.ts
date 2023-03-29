@@ -49,8 +49,8 @@ export interface EventState {
   loading: boolean;
   currentPage: number;
   totalPages: number;
-  startTime?: Date;
-  endTime?: Date;
+  startTime?: string;
+  endTime?: string;
 }
 
 const initialState: EventState = {
@@ -66,11 +66,13 @@ export const fetchEvents = createAsyncThunk(
     try {
       const {events} = getState();
       if (events.totalPages > events.currentPage) {
-        const res = await http.get<any>(
-          `${API_ROUTES.EVENTS.GET_ALL}?page=${
-            events.currentPage + 1
-          }&pageSize=${PAGE_SIZE}`,
-        );
+        let url = `${API_ROUTES.EVENTS.GET_ALL}?page=${
+          events.currentPage + 1
+        }&pageSize=${PAGE_SIZE}`;
+        if (events.startTime && events.endTime) {
+          url = `${url}&startTime=${events.startTime}&endTime=${events.endTime}`;
+        }
+        const res = await http.get<any>(url);
         return {events: res.data.data, totalPages: res.data.totalPages};
       } else {
         return {events: [], totalPages: events.totalPages};
@@ -96,8 +98,8 @@ export const reloadEvents = createAsyncThunk(
       return {
         events: res.data.data,
         totalPages: res.data.totalPages,
-        startTime,
-        endTime,
+        startTime: startTime?.toString(),
+        endTime: endTime?.toString(),
       };
     } catch (err) {
       return {events: [], totalPages: 0};
@@ -198,8 +200,8 @@ export const eventSlice = createSlice({
           action: PayloadAction<{
             events: Event[];
             totalPages: number;
-            startTime?: Date;
-            endTime?: Date;
+            startTime?: string;
+            endTime?: string;
           }>,
         ) => {
           state.loading = false;
