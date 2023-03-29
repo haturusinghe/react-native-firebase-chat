@@ -16,11 +16,13 @@ export const fetchPastEvents = createAsyncThunk(
     try {
       const {pastEvents} = getState();
       if (pastEvents.totalPages > pastEvents.currentPage) {
-        const res = await http.get<any>(
-          `${API_ROUTES.EVENTS.GET_ALL}?page=${
-            pastEvents.currentPage + 1
-          }&pageSize=${PAGE_SIZE}&pastEvents=true`,
-        );
+        let url = `${API_ROUTES.EVENTS.GET_ALL}?page=${
+          pastEvents.currentPage + 1
+        }&pageSize=${PAGE_SIZE}&pastEvents=true`;
+        if (pastEvents.searchTerm) {
+          url = `${url}&searchTerm=${pastEvents.searchTerm}`;
+        }
+        const res = await http.get<any>(url);
         return {events: res.data.data, totalPages: res.data.totalPages};
       } else {
         return {events: [], totalPages: pastEvents.totalPages};
@@ -33,23 +35,19 @@ export const fetchPastEvents = createAsyncThunk(
 
 export const reloadPastEvents = createAsyncThunk(
   'pastEvents/reloadEvents',
-  async (
-    {startTime, endTime}: {startTime?: Date; endTime?: Date},
-    {getState}: any,
-  ) => {
+  async ({searchTerm}: {searchTerm?: string}, {getState}: any) => {
     try {
       let url = `${
         API_ROUTES.EVENTS.GET_ALL
       }?page=${1}&pageSize=${PAGE_SIZE}&pastEvents=true`;
-      if (startTime && endTime) {
-        url = `${url}&startTime=${startTime}&endTime=${endTime}`;
+      if (searchTerm) {
+        url = `${url}&searchTerm=${searchTerm}`;
       }
       const res = await http.get<any>(url);
       return {
         events: res.data.data,
         totalPages: res.data.totalPages,
-        startTime,
-        endTime,
+        searchTerm,
       };
     } catch (err) {
       return {events: [], totalPages: 0};
@@ -125,20 +123,14 @@ export const pastEventSlice = createSlice({
           action: PayloadAction<{
             events: Event[];
             totalPages: number;
-            startTime?: Date;
-            endTime?: Date;
+            searchTerm?: string;
           }>,
         ) => {
           state.loading = false;
           state.data = action.payload.events;
           state.currentPage = 1;
           state.totalPages = action.payload.totalPages;
-          state.startTime = action.payload.startTime
-            ? action.payload.startTime
-            : state.startTime;
-          state.endTime = action.payload.endTime
-            ? action.payload.endTime
-            : state.endTime;
+          state.searchTerm = action.payload.searchTerm;
         },
       )
       .addCase(reloadPastEvents.rejected, state => {

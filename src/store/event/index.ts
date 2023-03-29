@@ -51,6 +51,7 @@ export interface EventState {
   totalPages: number;
   startTime?: string;
   endTime?: string;
+  searchTerm?: string;
 }
 
 const initialState: EventState = {
