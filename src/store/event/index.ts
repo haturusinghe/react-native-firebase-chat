@@ -31,6 +31,7 @@ export interface Session {
   address?: string;
   isMandatory: boolean;
   usersession: Array<UserSession>;
+  acceptedCount?: number;
 }
 export interface Event {
   _id: string;
@@ -54,6 +55,23 @@ export interface EventState {
   searchTerm?: string;
 }
 
+const mapEvents = (events: Event[]) => {
+  return events.map((event: Event) => {
+    return {
+      ...event,
+      sessions: event.sessions.map((session: Session) => {
+        return {
+          ...session,
+          acceptedCount: session.usersession.filter(
+            (userSession: UserSession) =>
+              userSession.status === sessionUserStatusType.accept,
+          ).length,
+        };
+      }),
+    };
+  });
+};
+
 const initialState: EventState = {
   data: [],
   loading: false,
@@ -74,7 +92,10 @@ export const fetchEvents = createAsyncThunk(
           url = `${url}&startTime=${events.startTime}&endTime=${events.endTime}`;
         }
         const res = await http.get<any>(url);
-        return {events: res.data.data, totalPages: res.data.totalPages};
+        return {
+          events: mapEvents(res.data.data),
+          totalPages: res.data.totalPages,
+        };
       } else {
         return {events: [], totalPages: events.totalPages};
       }
@@ -97,7 +118,7 @@ export const reloadEvents = createAsyncThunk(
       }
       const res = await http.get<any>(url);
       return {
-        events: res.data.data,
+        events: mapEvents(res.data.data),
         totalPages: res.data.totalPages,
         startTime: startTime?.toString(),
         endTime: endTime?.toString(),
@@ -159,8 +180,29 @@ export const eventSlice = createSlice({
               );
               if (index === -1) {
                 session.usersession.push(action.payload.userSession);
+                if (
+                  action.payload.userSession.status ===
+                  sessionUserStatusType.accept
+                ) {
+                  session.acceptedCount = session?.acceptedCount || 0 + 1;
+                }
               } else {
                 session.usersession[index] = action.payload.userSession;
+                if (
+                  action.payload.userSession.status ===
+                    sessionUserStatusType.accept &&
+                  session.usersession[index].status !==
+                    sessionUserStatusType.accept
+                ) {
+                  session.acceptedCount = session?.acceptedCount || 0 + 1;
+                } else if (
+                  action.payload.userSession.status !==
+                    sessionUserStatusType.accept &&
+                  session.usersession[index].status ===
+                    sessionUserStatusType.accept
+                ) {
+                  session.acceptedCount = session?.acceptedCount || 0 - 1;
+                }
               }
             }
             return session;

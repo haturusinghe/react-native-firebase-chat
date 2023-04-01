@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {RefreshControl, SafeAreaView, ScrollView} from 'react-native';
 import {Text} from 'react-native-elements';
 import {CalendarFilterButton} from '../../components/CalendarFilterButton';
+import {EmptyListWrapper} from '../../components/EmptyListWrapper';
 import {EventDetailsElement} from '../../components/EventDetailsElement';
 import {LoadingWrapper} from '../../components/LoadingWrapper';
 import {MyHeader} from '../../components/MyHeader';
@@ -37,33 +38,37 @@ export const MySchedule = () => {
     <SafeAreaView style={{flex: 1}}>
       <MyHeader title="My Schedule" backenable={true} />
       <LoadingWrapper loading={loading}>
-        <ScrollView
-          pagingEnabled={true}
-          onScrollEndDrag={handlePagination}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => {
-                dispatch(
-                  reloadSchedule({
-                    startTime: startTime ? new Date(startTime) : undefined,
-                    endTime: endTime ? new Date(endTime) : undefined,
-                  }),
-                );
-              }}
-              refreshing={loading}
-              colors={['#9Bd35A', '#689F38']}
-              progressBackgroundColor="#fff"
-            />
-          }>
+        <>
           <CalendarFilterButton
             reload={(fromDate: Date, toDate: Date) => {
               dispatch(reloadSchedule({startTime: fromDate, endTime: toDate}));
             }}
           />
-          {sessions?.map((session: Session) => (
-            <EventDetailsElement key={session._id} session={session} />
-          ))}
-        </ScrollView>
+          <EmptyListWrapper loading={loading} list={sessions}>
+            <ScrollView
+              pagingEnabled={true}
+              onScrollEndDrag={handlePagination}
+              refreshControl={
+                <RefreshControl
+                  onRefresh={() => {
+                    dispatch(
+                      reloadSchedule({
+                        startTime: startTime ? new Date(startTime) : undefined,
+                        endTime: endTime ? new Date(endTime) : undefined,
+                      }),
+                    );
+                  }}
+                  refreshing={loading}
+                  colors={['#9Bd35A', '#689F38']}
+                  progressBackgroundColor="#fff"
+                />
+              }>
+              {sessions?.map((session: Session) => (
+                <EventDetailsElement key={session._id} session={session} />
+              ))}
+            </ScrollView>
+          </EmptyListWrapper>
+        </>
       </LoadingWrapper>
     </SafeAreaView>
   );

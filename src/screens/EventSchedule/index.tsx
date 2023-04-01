@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 import {Tab} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
 import {PastEvents} from '../../components/PastEvents';
@@ -10,7 +10,7 @@ import {styles} from './style';
 export const EventSchedule = () => {
   const [index, setIndex] = React.useState<number>(0);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <MyHeader title="Event Schedule" />
       <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
         <Tab.Item
@@ -29,7 +29,7 @@ export const EventSchedule = () => {
           titleStyle={styles.tabTitle}
         />
       </Tab>
-      <ScrollView>
+      <View style={{flex: 1}}>
         {index === 0 ? (
           <StoryList />
         ) : index === 1 ? (
@@ -37,7 +37,7 @@ export const EventSchedule = () => {
         ) : (
           <PastEvents />
         )}
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

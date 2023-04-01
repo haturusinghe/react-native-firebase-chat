@@ -22,6 +22,15 @@ export const EventDetailsElement = ({session}: {session: Session}) => {
       (userSession: UserSession) => userSession.user === user?._id,
     ) || null,
   );
+
+  React.useEffect(() => {
+    setUserSession(
+      session.usersession.find(
+        (userSession: UserSession) => userSession.user === user?._id,
+      ) || null,
+    );
+  }, [session]);
+
   const {loading, mutate} = useMutation({
     url: API_ROUTES.EVENTS.UPDATE_USER_SESSION_BY_ID,
   });
@@ -37,7 +46,6 @@ export const EventDetailsElement = ({session}: {session: Session}) => {
       HTTP_TYPES.PUT,
     );
     if (res.success) {
-      setUserSession(res.data.sessionUser);
       dispatch(updateSession(res.data.sessionUser));
     }
   };

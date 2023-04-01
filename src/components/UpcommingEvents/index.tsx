@@ -3,6 +3,7 @@ import {RefreshControl, ScrollView, View} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, fetchEvents, reloadEvents} from '../../store/event';
 import {CalendarFilterButton} from '../CalendarFilterButton';
+import {EmptyListWrapper} from '../EmptyListWrapper';
 import {EventElement} from '../EventElement';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
 
@@ -29,30 +30,34 @@ export const UpcommingEvents = () => {
 
   return (
     <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
-      <ScrollView
-        pagingEnabled={true}
-        onScrollEndDrag={handlePagination}
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              dispatch(
-                reloadEvents({startTime: undefined, endTime: undefined}),
-              );
-            }}
-            refreshing={loading}
-            colors={['#9Bd35A', '#689F38']}
-            progressBackgroundColor="#fff"
-          />
-        }>
+      <>
         <CalendarFilterButton
           reload={(fromDate: Date, toDate: Date) => {
             dispatch(reloadEvents({startTime: fromDate, endTime: toDate}));
           }}
         />
-        {events?.map((event: Event) => (
-          <EventElement key={event._id} data={event} />
-        ))}
-      </ScrollView>
+        <EmptyListWrapper loading={loading} list={events}>
+          <ScrollView
+            pagingEnabled={true}
+            onScrollEndDrag={handlePagination}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => {
+                  dispatch(
+                    reloadEvents({startTime: undefined, endTime: undefined}),
+                  );
+                }}
+                refreshing={loading}
+                colors={['#9Bd35A', '#689F38']}
+                progressBackgroundColor="#fff"
+              />
+            }>
+            {events?.map((event: Event) => (
+              <EventElement key={event._id} data={event} />
+            ))}
+          </ScrollView>
+        </EmptyListWrapper>
+      </>
     </LoadingWrapper>
   );
 };

@@ -1,7 +1,7 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {API_ROUTES, PAGE_SIZE} from '../../constants';
 import http from '../../services/http';
-import {Session} from '../event';
+import {Session, sessionUserStatusType, UserSession} from '../event';
 
 export interface MyScheduleState {
   data: Session[];
@@ -11,6 +11,18 @@ export interface MyScheduleState {
   startTime?: string;
   endTime?: string;
 }
+
+const mapSessions = (sessions: Session[]) => {
+  return sessions.map((session: Session) => {
+    return {
+      ...session,
+      acceptedCount: session?.usersession.filter(
+        (userSession: UserSession) =>
+          userSession.status === sessionUserStatusType.accept,
+      ).length,
+    };
+  });
+};
 
 const initialState: MyScheduleState = {
   data: [],
@@ -33,7 +45,10 @@ export const fetchSchedule = createAsyncThunk(
         }
         const res = await http.get<any>(url);
 
-        return {sessions: res.data.sessions, totalPages: res.data.totalPages};
+        return {
+          sessions: mapSessions(res.data.sessions),
+          totalPages: res.data.totalPages,
+        };
       } else {
         return {sessions: [], totalPages: mySessions.totalPages};
       }
@@ -58,7 +73,7 @@ export const reloadSchedule = createAsyncThunk(
       }
       const res = await http.get<any>(url);
       return {
-        sessions: res.data.sessions,
+        sessions: mapSessions(res.data.sessions),
         totalPages: res.data.totalPages,
         startTime: startTime?.toString(),
         endTime: endTime?.toString(),
@@ -81,13 +96,30 @@ export const myScheduleSlice = createSlice({
     },
     updateSession: (
       state: MyScheduleState,
-      action: PayloadAction<Session>,
+      action: PayloadAction<UserSession>,
     ): void => {
       state.data = state.data.map((session: Session) => {
-        if (session._id == action.payload._id) {
-          return action.payload;
-        }
-        return session;
+        return {
+          ...session,
+          usersession: session.usersession.map((userSession: UserSession) => {
+            if (userSession._id === action.payload._id) {
+              return action.payload;
+            }
+            return userSession;
+          }),
+          acceptedCount:
+            session.usersession
+              .map((userSession: UserSession) => {
+                if (userSession._id === action.payload._id) {
+                  return action.payload;
+                }
+                return userSession;
+              })
+              .filter(
+                (usersession: UserSession) =>
+                  usersession.status === sessionUserStatusType.accept,
+              ).length || 0,
+        };
       });
     },
   },

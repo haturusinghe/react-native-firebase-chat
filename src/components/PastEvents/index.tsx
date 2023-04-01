@@ -5,6 +5,7 @@ import {colors} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, reloadEvents} from '../../store/event';
 import {fetchPastEvents, reloadPastEvents} from '../../store/pastEvents';
+import {EmptyListWrapper} from '../EmptyListWrapper';
 import {EventElement} from '../EventElement';
 import {InputField} from '../InputField';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
@@ -74,26 +75,28 @@ export const PastEvents = () => {
         />
       </View>
       <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
-        <ScrollView
-          pagingEnabled={true}
-          onScrollEndDrag={handlePagination}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => {
-                dispatch(
-                  reloadEvents({startTime: undefined, endTime: undefined}),
-                );
-              }}
-              refreshing={loading}
-              colors={['#9Bd35A', '#689F38']}
-              progressBackgroundColor="#fff"
-            />
-          }>
-          {/* <CalendarFilterButton /> */}
-          {events?.map((event: Event) => (
-            <EventElement key={event._id} data={event} isPast={true} />
-          ))}
-        </ScrollView>
+        <EmptyListWrapper loading={loading} list={events}>
+          <ScrollView
+            pagingEnabled={true}
+            onScrollEndDrag={handlePagination}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => {
+                  dispatch(
+                    reloadEvents({startTime: undefined, endTime: undefined}),
+                  );
+                }}
+                refreshing={loading}
+                colors={['#9Bd35A', '#689F38']}
+                progressBackgroundColor="#fff"
+              />
+            }>
+            {/* <CalendarFilterButton /> */}
+            {events?.map((event: Event) => (
+              <EventElement key={event._id} data={event} isPast={true} />
+            ))}
+          </ScrollView>
+        </EmptyListWrapper>
       </LoadingWrapper>
     </>
   );

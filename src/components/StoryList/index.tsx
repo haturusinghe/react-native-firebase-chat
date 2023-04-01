@@ -4,6 +4,7 @@ import {Button} from 'react-native-elements';
 import {colors, routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {fetchStory, reloadStory, Story} from '../../store/story';
+import {EmptyListWrapper} from '../EmptyListWrapper';
 import {FeedElement} from '../FeedElement';
 import {InputField} from '../InputField';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
@@ -33,7 +34,7 @@ export const StoryList = () => {
   }
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <View style={styles.searchBar}>
         <InputField
           onChangeText={(e: any) => {
@@ -73,29 +74,32 @@ export const StoryList = () => {
         />
       </View>
       <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
-        <ScrollView
-          pagingEnabled={true}
-          onScrollEndDrag={handlePagination}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => {
-                dispatch(reloadStory(''));
-              }}
-              refreshing={loading}
-              colors={['#9Bd35A', '#689F38']}
-              progressBackgroundColor="#fff"
-            />
-          }>
-          {stories?.map((story: Story) => (
-            <FeedElement
-              key={story._id}
-              id={story._id}
-              url={routes.storyDetails}
-              title={story.storyTitle}
-              date={story.createdAt}
-            />
-          ))}
-        </ScrollView>
+        <EmptyListWrapper list={stories} loading={loading}>
+          <ScrollView
+            contentContainerStyle={{flex: 1}}
+            pagingEnabled={true}
+            onScrollEndDrag={handlePagination}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => {
+                  dispatch(reloadStory(''));
+                }}
+                refreshing={loading}
+                colors={['#9Bd35A', '#689F38']}
+                progressBackgroundColor="#fff"
+              />
+            }>
+            {stories?.map((story: Story) => (
+              <FeedElement
+                key={story._id}
+                id={story._id}
+                url={routes.storyDetails}
+                title={story.storyTitle}
+                date={story.createdAt}
+              />
+            ))}
+          </ScrollView>
+        </EmptyListWrapper>
       </LoadingWrapper>
     </View>
   );

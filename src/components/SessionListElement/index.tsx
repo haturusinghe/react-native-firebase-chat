@@ -20,6 +20,7 @@ export const SessionListElement = ({
   index: number;
   isPast: boolean;
 }) => {
+  const {user} = useAppSelector(store => store.user);
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -96,12 +97,15 @@ export const SessionListElement = ({
               <Text style={styles.title}>No of Seats :</Text>
               {session.seats}
             </Text>
-          ) : (
+          ) : session.seats - (session.acceptedCount || 0) > 0 ||
+            session.usersession.filter(
+              (usersession: UserSession) => usersession.user === user?._id,
+            )[0]?.status === sessionUserStatusType.accept ? (
             <View>
               <View style={[styles.SeatCard, styles.marginTop]}>
                 <Text style={styles.SubContentText}>
-                  <Text style={styles.title}>Total No of Seats :</Text>
-                  {session.seats}
+                  <Text style={styles.title}>Total Available of Seats :</Text>
+                  {session.seats - (session.acceptedCount || 0)}
                 </Text>
                 <View style={[styles.row, styles.marginTop]}>
                   <Icon
@@ -126,6 +130,8 @@ export const SessionListElement = ({
                 isPast={isPast}
               />
             </View>
+          ) : (
+            <></>
           )}
         </View>
       )}

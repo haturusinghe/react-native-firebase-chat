@@ -3,6 +3,7 @@ import {RefreshControl, ScrollView} from 'react-native';
 import {routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {fetchNews, News, reloadNews} from '../../store/news';
+import {EmptyListWrapper} from '../EmptyListWrapper';
 import {FeedElement} from '../FeedElement';
 import {LoadingType, LoadingWrapper} from '../LoadingWrapper';
 
@@ -29,29 +30,31 @@ export const NewsFeed = () => {
 
   return (
     <LoadingWrapper loading={loading} type={LoadingType.PAGINATION_LOAD}>
-      <ScrollView
-        pagingEnabled={true}
-        onScrollEndDrag={handlePagination}
-        refreshControl={
-          <RefreshControl
-            onRefresh={() => {
-              dispatch(reloadNews(''));
-            }}
-            refreshing={loading}
-            colors={['#9Bd35A', '#689F38']}
-            progressBackgroundColor="#fff"
-          />
-        }>
-        {news?.map((news: News) => (
-          <FeedElement
-            key={news._id}
-            id={news._id}
-            title={news.title}
-            date={news.createdAt}
-            url={routes.newsDetails}
-          />
-        ))}
-      </ScrollView>
+      <EmptyListWrapper list={news} loading={loading}>
+        <ScrollView
+          pagingEnabled={true}
+          onScrollEndDrag={handlePagination}
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => {
+                dispatch(reloadNews(''));
+              }}
+              refreshing={loading}
+              colors={['#9Bd35A', '#689F38']}
+              progressBackgroundColor="#fff"
+            />
+          }>
+          {news?.map((news: News) => (
+            <FeedElement
+              key={news._id}
+              id={news._id}
+              title={news.title}
+              date={news.createdAt}
+              url={routes.newsDetails}
+            />
+          ))}
+        </ScrollView>
+      </EmptyListWrapper>
     </LoadingWrapper>
   );
 };
