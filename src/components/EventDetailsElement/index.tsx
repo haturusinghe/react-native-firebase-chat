@@ -8,6 +8,7 @@ import {useMutation} from '../../hooks/useMutate';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Session, sessionUserStatusType, UserSession} from '../../store/event';
 import {updateSession} from '../../store/mySchedule';
+import {DownloadFile} from '../DownloadFile';
 import {LoadingWrapper} from '../LoadingWrapper';
 import {styles} from './style';
 
@@ -54,7 +55,8 @@ export const EventDetailsElement = ({session}: {session: Session}) => {
     <View style={styles.card}>
       <View style={styles.titleRow}>
         <Text style={styles.title}>{session.title}</Text>
-        <Icon name="file" type="font-awesome" size={18} color={colors.black} />
+        {/* <Icon name="file" type="font-awesome" size={18} color={colors.black} /> */}
+        <DownloadFile url="this is the url" />
       </View>
       <View style={styles.row}>
         <Text style={styles.date}>
