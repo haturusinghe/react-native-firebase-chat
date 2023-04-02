@@ -15,7 +15,6 @@ export const ComapanyProfileRepresentives = () => {
   const route = useRoute<any>();
   const [index, setIndex] = React.useState<number>(0);
   const [data, setData] = useState<ICompany>(route.params.company);
-  console.log(data.representives);
 
   return (
     <SafeAreaView style={{flex: 1}}>

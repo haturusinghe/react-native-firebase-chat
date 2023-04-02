@@ -107,7 +107,7 @@ export const BoardMemberList = () => {
                 imageUrl={
                   member.imageUrl || 'https://source.unsplash.com/random/?dog'
                 }
-                params={{memberProfile: member, title: 'Member Profile'}}
+                params={{user: member, title: 'Member Profile'}}
               />
             ))}
           </ScrollView>

@@ -25,7 +25,6 @@ export const MemberList = () => {
     }&page=${page || currentPage + 1}&pageSize=${PAGE_SIZE}`;
     const res = await mutate({}, HTTP_TYPES.GET, {}, url);
     if (res.success) {
-      console.log(res.data);
       setData(res.data.data);
     }
   };

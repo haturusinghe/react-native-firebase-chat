@@ -5,7 +5,9 @@ import {MyHeader} from '../../components/MyHeader';
 import {colors} from '../../constants';
 import {styles} from './style';
 
-export const Profile = () => {
+export const Profile = ({route}: any) => {
+  const {user} = route.params;
+
   return (
     <SafeAreaView>
       <MyHeader title="Profile View" />
@@ -21,7 +23,7 @@ export const Profile = () => {
               />
             </View>
             <Text style={[styles.title, styles.textAlignCenter]}>
-              John Smith
+              {user.name || 'John Smith'}
             </Text>
             <Text style={[styles.subTitle, styles.textAlignCenter]}>
               Managing Derector on Next Spaces Ltd.

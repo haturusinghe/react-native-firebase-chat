@@ -158,8 +158,6 @@ export const myScheduleSlice = createSlice({
             endTime?: string;
           }>,
         ) => {
-          console.log(action.payload?.startTime);
-
           state.loading = false;
           state.data = action.payload.sessions;
           state.currentPage = 1;

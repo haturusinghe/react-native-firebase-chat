@@ -47,7 +47,6 @@ export const CalendarFilterButton = ({
   useEffect(() => {
     if (moment(fromDate).isBefore(toDate)) {
       // reload
-      console.log(fromDate, toDate);
       reload(fromDate, toDate);
     }
   }, [fromDate, toDate]);
