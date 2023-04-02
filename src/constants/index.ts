@@ -18,7 +18,7 @@ export const routes = {
   scheduleDetails: 'Schedule Details',
   participants: 'Participants',
   profile: 'Profile',
-  subDirectory: 'subDirectory',
+  memberList: 'memberList',
   about: 'About',
   companyProfile: 'Company Profile',
   chat: 'chat',
@@ -26,6 +26,9 @@ export const routes = {
   eventMenu: 'eventMenu',
   sponsorList: 'sponsorList',
   sessionList: 'sessionList',
+  memberProfile: 'memberProfile',
+  campanyProfileRepresentives: 'campanyProfileRepresentives',
+  boardMemberList: 'boardMemberList',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
@@ -43,6 +46,7 @@ export const API_ROUTES = {
   USER: {
     LOGIN: '/auth/login',
     WHO_AM_I: '/auth/check-user',
+    GET_ALL_MEMBERS: '/api/user/members',
   },
   NEWS: {
     GET_ALL: '/api/news',
@@ -54,6 +58,9 @@ export const API_ROUTES = {
     GET_PARTICIPANTS: '/api/event/session/users',
     UPDATE_USER_SESSION: '/api/event/session/user',
     UPDATE_USER_SESSION_BY_ID: '/api/event/sessionUser',
+  },
+  MEMBERS: {
+    GET_MEMBERS: '/api/member/members',
   },
 };
 

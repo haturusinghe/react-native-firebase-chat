@@ -12,10 +12,12 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  name: string;
   userName: string;
   roles: UserRole[];
   managerId: string;
   active: boolean;
+  imageUrl?: string;
 }
 
 export interface UserState {

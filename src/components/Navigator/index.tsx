@@ -8,7 +8,7 @@ import {NewsDetails} from '../../screens/NewsDetails';
 import {EventScheduleDetails} from '../../screens/EventScheduleDetails';
 import {Participants} from '../../screens/Participants';
 import {Profile} from '../../screens/Profile';
-import {SubDirectory} from '../../screens/SubDirectory';
+import {MemberList} from '../../screens/MemberList';
 import {About} from '../../screens/About';
 import {CompanyProfile} from '../../screens/ComapyProfile';
 import {Chat} from '../../screens/Chat';
@@ -21,6 +21,9 @@ import {EventMenu} from '../../screens/EventMenu';
 import {SponsorList} from '../../screens/SponsorList';
 import {SessionList} from '../../screens/SessionList';
 import {SafeAreaView} from 'react-native';
+import {MemberProfile} from '../../screens/MemberProfile';
+import {ComapanyProfileRepresentives} from '../../screens/CompanyProfileRepresentived';
+import {BoardMemberList} from '../../screens/BoardMemberList';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,8 +74,8 @@ export const Navigator = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name={routes.subDirectory}
-            component={SubDirectory}
+            name={routes.memberList}
+            component={MemberList}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -108,6 +111,21 @@ export const Navigator = () => {
           <Stack.Screen
             name={routes.sessionList}
             component={SessionList}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.memberProfile}
+            component={MemberProfile}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.campanyProfileRepresentives}
+            component={ComapanyProfileRepresentives}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.boardMemberList}
+            component={BoardMemberList}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

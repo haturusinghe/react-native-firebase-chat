@@ -6,39 +6,41 @@ import {ParticipantElement} from '../../components/ParticipantElement';
 import {routes} from '../../constants';
 import {useAppDispatch, useAppSelector} from '../../hooks/useRedux';
 import {Event, loadSponsors, Sponsor} from '../../store/event';
+import {loadPastSponsors} from '../../store/pastEvents';
 
 export const SponsorList = ({route}: any) => {
-  const {id} = route.params;
-  const {data, loading} = useAppSelector((store: any) => store.events);
+  const {id, isPast} = route.params;
+  const {data, loading} = useAppSelector((store: any) =>
+    isPast ? store.pastEvents : store.events,
+  );
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadSponsors({_id: id}));
+    dispatch(isPast ? loadPastSponsors({_id: id}) : loadSponsors({_id: id}));
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <MyHeader title="Sponsors" />
-      <ScrollView>
-        <LoadingWrapper loading={loading}>
-          <View>
-            {!loading &&
-              data
-                .find((element: Event) => element._id === id)
-                ?.sponsors?.map((sponsor: Sponsor) => (
-                  <ParticipantElement
-                    key={sponsor._id}
-                    title={sponsor.company.name}
-                    subTitle={sponsor.status}
-                    imageUrl={sponsor.company.image}
-                    round={false}
-                    url={routes.companyProfile}
-                    params={sponsor.company}
-                  />
-                ))}
-          </View>
-        </LoadingWrapper>
-      </ScrollView>
+      <LoadingWrapper loading={loading}>
+        <ScrollView>
+          {!loading &&
+            data
+              ?.find((element: Event) => element._id === id)
+              ?.sponsors?.map((sponsor: Sponsor) => (
+                <ParticipantElement
+                  key={sponsor._id}
+                  title={sponsor.company.name}
+                  subTitle={sponsor.status}
+                  imageUrl={sponsor.company.image}
+                  round={false}
+                  url={routes.companyProfile}
+                  params={sponsor.company}
+                />
+              ))}
+        </ScrollView>
+      </LoadingWrapper>
     </SafeAreaView>
   );
 };

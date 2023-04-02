@@ -17,7 +17,7 @@ export const Directory = () => {
         />
         <ParticipantElement
           round={false}
-          url={routes.subDirectory}
+          url={routes.memberList}
           title="IFAWPCA Members"
           imageUrl="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
           params={{
@@ -28,30 +28,16 @@ export const Directory = () => {
         />
         <ParticipantElement
           round={false}
-          url={routes.subDirectory}
+          url={routes.memberList}
           params={{title: 'Office Bearers', round: true}}
           title="Office Bearers"
           imageUrl="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
         />
         <ParticipantElement
           round={false}
-          url={routes.subDirectory}
+          url={routes.boardMemberList}
           params={{title: 'Board Members', round: true}}
           title="Board Members"
-          imageUrl="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        />
-        <ParticipantElement
-          round={false}
-          url={routes.subDirectory}
-          params={{title: 'Deligates', round: true}}
-          title="Deligates"
-          imageUrl="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-        />
-        <ParticipantElement
-          round={false}
-          url={routes.subDirectory}
-          params={{title: 'Main Sponsors', round: false}}
-          title="Main Sponsors"
           imageUrl="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
         />
       </ScrollView>

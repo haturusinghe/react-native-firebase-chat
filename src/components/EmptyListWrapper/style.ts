@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,5 +9,9 @@ export const styles = StyleSheet.create({
   },
   flex: {
     flex: 1,
+  },
+  text: {
+    color: colors.grey,
+    fontSize: 12,
   },
 });
