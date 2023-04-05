@@ -29,6 +29,7 @@ export const routes = {
   memberProfile: 'memberProfile',
   campanyProfileRepresentives: 'campanyProfileRepresentives',
   boardMemberList: 'boardMemberList',
+  officeBearers: 'officeBearers',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
@@ -61,6 +62,9 @@ export const API_ROUTES = {
   },
   MEMBERS: {
     GET_MEMBERS: '/api/member/members',
+  },
+  OFFICE_BEARER: {
+    GET_ALL: 'api/officeBearers',
   },
 };
 

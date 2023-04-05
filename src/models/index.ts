@@ -19,3 +19,14 @@ export interface ICompany {
   editableBy: string;
   createdAt: string;
 }
+
+export interface IOfficeBearer {
+  _id: string;
+  name: string;
+  president: User;
+  firstVPrisident: User;
+  secondVPrisident: User;
+  secretaryGeneral: User;
+  ProSecretaryGeneral: User;
+  isCurrent: boolean;
+}

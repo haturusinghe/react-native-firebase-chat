@@ -24,6 +24,7 @@ import {SafeAreaView} from 'react-native';
 import {MemberProfile} from '../../screens/MemberProfile';
 import {ComapanyProfileRepresentives} from '../../screens/CompanyProfileRepresentived';
 import {BoardMemberList} from '../../screens/BoardMemberList';
+import {OfficeBearerList} from '../../screens/OfficeBearerList';
 
 const Stack = createNativeStackNavigator();
 
@@ -126,6 +127,11 @@ export const Navigator = () => {
           <Stack.Screen
             name={routes.boardMemberList}
             component={BoardMemberList}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.officeBearers}
+            component={OfficeBearerList}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
