@@ -49,9 +49,6 @@ const LoginPage: React.FC = () => {
     if (res.success) {
       AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
       dispatch(userSlice.actions.setUser(res.data.data.user));
-      navigation.dispatch({
-        ...StackActions.push(routes.home),
-      });
     } else {
       setErrors({
         email: 'Invalid Credentials',

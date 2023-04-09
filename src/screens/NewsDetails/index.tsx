@@ -1,13 +1,14 @@
 import moment from 'moment';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {ScrollView, useWindowDimensions, View} from 'react-native';
 import {Image, Text} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
+import {withAuth} from '../../hoc/withAuth';
 import {useAppSelector} from '../../hooks/useRedux';
 import {News} from '../../store/news';
 import {styles} from './style';
 
-export const NewsDetails = ({route}: any) => {
+const NewsDetails = ({route}: any) => {
   const {id} = route.params;
   const {data: news} = useAppSelector(store => store.news);
   const [newsdata, setNewsdata] = useState<News | null>(
@@ -35,3 +36,5 @@ export const NewsDetails = ({route}: any) => {
     </ScrollView>
   );
 };
+
+export default withAuth(NewsDetails);

@@ -12,6 +12,7 @@ export const X_Button = (props: {
   borderWidth?: number;
   fontSize?: number;
   fontFamily?: string;
+  backgroundColor?: string;
 }) => {
   return (
     <View>
@@ -30,7 +31,7 @@ export const X_Button = (props: {
         containerStyle={{
           minWidth: 150,
           minHeight: 48,
-          backgroundColor: colors.primary,
+          backgroundColor: props.backgroundColor || colors.primary,
         }}
         icon={props.icon}
         title={props.title}
