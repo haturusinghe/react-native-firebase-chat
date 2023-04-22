@@ -24,6 +24,7 @@ import {LoadingWrapper} from '../../components/LoadingWrapper';
 import {useAppDispatch} from '../../hooks/useRedux';
 import {userSlice} from '../../store/user';
 import {withoutAuth} from '../../hoc/withoutAuth';
+import OneSignal from 'react-native-onesignal';
 
 interface LoginType {
   email: string;
@@ -45,7 +46,8 @@ const LoginPage: React.FC = () => {
   const {loading, mutate} = useMutation({url: API_ROUTES.USER.LOGIN});
 
   const handleLogin = async (values: LoginType, setErrors: any) => {
-    const res = await mutate(values);
+    const onesignalData = await OneSignal.getDeviceState();
+    const res = await mutate({...values, deviceId: onesignalData?.userId});
     if (res.success) {
       AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
       dispatch(userSlice.actions.setUser(res.data.data.user));
