@@ -1,9 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {ACCESS_TOKEN} from '../../constants';
+// @ts-ignore
+import {BASE_URL} from '@env';
 
 const http = axios.create({
-  baseURL: 'http://10.0.2.2:5000',
+  baseURL: BASE_URL,
   timeout: 30000 * 2,
 });
 
