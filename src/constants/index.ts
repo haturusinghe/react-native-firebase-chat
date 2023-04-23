@@ -51,6 +51,7 @@ export const API_ROUTES = {
   },
   NEWS: {
     GET_ALL: '/api/news',
+    GET_BY_ID: '/api/news/:id',
   },
   EVENTS: {
     GET_ALL: '/api/event',

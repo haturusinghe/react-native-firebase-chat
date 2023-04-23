@@ -61,7 +61,7 @@ export const Navigator = () => {
     const routeName = route?.split('/')[0];
     const params = route?.split('/')[1];
     if (routeName) {
-      navigate(routeName, {});
+      navigate(routeName, {isFromNotification: true, id: params});
     }
   };
 
