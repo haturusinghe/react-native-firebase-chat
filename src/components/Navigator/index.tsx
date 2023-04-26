@@ -26,6 +26,7 @@ import {ComapanyProfileRepresentives} from '../../screens/CompanyProfileRepresen
 import {BoardMemberList} from '../../screens/BoardMemberList';
 import {OfficeBearerList} from '../../screens/OfficeBearerList';
 import {createNavigationContainerRef} from '@react-navigation/native';
+import UpdateProfile from '../../screens/UpdateProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -162,6 +163,11 @@ export const Navigator = () => {
           <Stack.Screen
             name={routes.officeBearers}
             component={OfficeBearerList}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.updateProfile}
+            component={UpdateProfile}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

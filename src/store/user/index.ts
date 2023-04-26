@@ -7,6 +7,11 @@ interface UserRole {
   name: string;
 }
 
+export enum GENDERTYPES {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NOTSAY = 'NOTSAY',
+}
 export interface User {
   _id: string;
   firstName: string;
@@ -18,6 +23,15 @@ export interface User {
   managerId: string;
   active: boolean;
   imageUrl?: string;
+  background?: string;
+  mobile?: string;
+  gender?: GENDERTYPES;
+  quote?: string;
+  shortDescription?: string;
+  address: {
+    address_line_1?: string;
+    address_line_2?: string;
+  };
 }
 
 export interface UserState {

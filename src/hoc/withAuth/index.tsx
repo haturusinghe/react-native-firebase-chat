@@ -15,7 +15,7 @@ export function withAuth<P>(WrappedComponent: ComponentType<P>): FC<P> {
 
     const checkPermission = () => {
       if (authenticated === false && !loading) {
-        navigation.dispatch({...StackActions?.push(routes.login)});
+        navigation.dispatch({...StackActions?.replace(routes.login)});
         return;
       }
     };

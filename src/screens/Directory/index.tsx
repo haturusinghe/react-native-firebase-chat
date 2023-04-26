@@ -58,6 +58,17 @@ export const Directory = () => {
         />
         <View style={styles.buttonWrapper}>
           <X_Button
+            title="Update profile"
+            color={colors.white}
+            onPress={() => {
+              navigation.dispatch(StackActions?.push(routes.updateProfile));
+            }}
+            backgroundColor={colors.primary_dark}
+            borderWidth={0}
+          />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <X_Button
             title="Log Out"
             color={colors.white}
             onPress={logout}

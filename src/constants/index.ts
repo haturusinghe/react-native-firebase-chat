@@ -30,6 +30,7 @@ export const routes = {
   campanyProfileRepresentives: 'campanyProfileRepresentives',
   boardMemberList: 'boardMemberList',
   officeBearers: 'officeBearers',
+  updateProfile: 'updateProfile',
 };
 
 export const ACCESS_TOKEN = 'ACCESS_TOKEN';
@@ -48,6 +49,7 @@ export const API_ROUTES = {
     LOGIN: '/auth/login',
     WHO_AM_I: '/auth/check-user',
     GET_ALL_MEMBERS: '/api/user/members',
+    UPDATE_USER: '/api/user/updateUser',
   },
   NEWS: {
     GET_ALL: '/api/news',
