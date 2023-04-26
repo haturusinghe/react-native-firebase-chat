@@ -20,7 +20,7 @@ export const X_Button = (props: {
         buttonStyle={{
           borderRadius: 8,
           borderColor: props.color,
-          borderWidth: props.borderWidth || 2,
+          borderWidth: props.borderWidth || 0,
           minHeight: 48,
         }}
         titleStyle={{
