@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Dimensions,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
@@ -20,7 +21,7 @@ import {styles} from './style';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
 import {useMutation} from '../../hooks/useMutate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {LoadingWrapper} from '../../components/LoadingWrapper';
+import {LoadingType, LoadingWrapper} from '../../components/LoadingWrapper';
 import {useAppDispatch} from '../../hooks/useRedux';
 import {userSlice} from '../../store/user';
 import {withoutAuth} from '../../hoc/withoutAuth';
@@ -44,18 +45,25 @@ const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
   const {loading, mutate} = useMutation({url: API_ROUTES.USER.LOGIN});
+  const [resStatus, setresStatus] = React.useState<any>(undefined);
+  const windowsWidth = Dimensions.get('window').width;
 
   const handleLogin = async (values: LoginType, setErrors: any) => {
-    const onesignalData = await OneSignal.getDeviceState();
-    const res = await mutate({...values, deviceId: onesignalData?.userId});
-    if (res.success) {
-      AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
-      dispatch(userSlice.actions.setUser(res.data.data.user));
-    } else {
-      setErrors({
-        email: 'Invalid Credentials',
-        password: 'Invalid Credentials',
-      });
+    try {
+      const onesignalData = await OneSignal.getDeviceState();
+      const res = await mutate({...values, deviceId: onesignalData?.userId});
+      if (res.success) {
+        AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
+        dispatch(userSlice.actions.setUser(res.data.data.user));
+      } else {
+        setErrors({
+          email: 'Invalid Credentials',
+          password: 'Invalid Credentials',
+        });
+      }
+      setresStatus(res.errors);
+    } catch (error) {
+      console.log({error});
     }
   };
 
@@ -65,8 +73,8 @@ const LoginPage: React.FC = () => {
         backgroundColor={colors.primary_dark}
         barStyle={'light-content'}
       />
-      <LoadingWrapper loading={loading}>
-        <ScrollView style={styles.scrollview}>
+      <LoadingWrapper loading={loading} type={LoadingType.OVERLAY}>
+        <ScrollView style={[styles.scrollview]}>
           <View>
             <KeyboardAvoidingView
               style={{
@@ -75,16 +83,25 @@ const LoginPage: React.FC = () => {
                 borderRadius: 10,
                 // height: maskHeight,
               }}>
-              <Image
-                source={require('../../assets/images/LOGO.png')}
-                style={styles.image}
-              />
+              <View
+                style={{
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={require('../../assets/images/LOGO.jpg')}
+                  style={[styles.image, {maxWidth: windowsWidth - 50}]}
+                />
+              </View>
               <Formik
                 validationSchema={loginValidationSchema}
                 initialValues={{email: '', password: ''}}
                 validateOnChange={true}
-                onSubmit={(values: LoginType, {setErrors}) => {
-                  handleLogin(values, setErrors);
+                onSubmit={async (
+                  values: LoginType,
+                  {setErrors, setSubmitting},
+                ) => {
+                  await handleLogin(values, setErrors);
+                  setSubmitting(false);
                 }}>
                 {({
                   handleChange,

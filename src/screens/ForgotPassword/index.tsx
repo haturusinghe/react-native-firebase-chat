@@ -44,7 +44,7 @@ export const ForgotPasswordPage = () => {
               // height: maskHeight,
             }}>
             <Image
-              source={require('../../assets/images/LOGO.png')}
+              source={require('../../assets/images/LOGO.jpg')}
               style={styles.image}
             />
             <Text style={styles.intro}>

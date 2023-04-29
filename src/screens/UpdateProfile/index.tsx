@@ -54,7 +54,6 @@ const UpdateProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(store => store.user);
   const [imageFile, setImageFile] = useState<any>(null);
-  console.log(user);
 
   const {loading, mutate} = useMutation({url: API_ROUTES.USER.UPDATE_USER});
 

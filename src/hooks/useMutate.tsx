@@ -29,6 +29,8 @@ const useMutation = ({url}: IProps) => {
         body,
         headers,
       );
+      console.log({response});
+
       setLoading(false);
       return {
         success: true,

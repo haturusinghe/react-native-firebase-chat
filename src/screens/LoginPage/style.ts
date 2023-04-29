@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../constants';
 
 export const styles = StyleSheet.create({
   textType: {
@@ -8,7 +9,8 @@ export const styles = StyleSheet.create({
     marginBottom: 40,
   },
   scrollview: {
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
+    // flex: 1,
   },
   forgotPassword: {
     fontSize: 14,

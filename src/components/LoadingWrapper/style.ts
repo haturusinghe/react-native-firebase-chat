@@ -13,4 +13,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  overlayStyle: {
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
 });
