@@ -12,7 +12,7 @@ export const InputField = (props: any) => {
           backgroundColor: 'white',
           borderRadius: 8,
           borderColor: colors.grey,
-          borderWidth: props.borderWidths || 2,
+          borderWidth: props.borderWidths || 0,
           height: props.height || 48,
           marginBottom: props.marginBottom || 25,
         }}
