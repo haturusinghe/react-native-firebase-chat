@@ -15,7 +15,7 @@ import {ACCESS_TOKEN, API_ROUTES, colors, routes} from '../../constants';
 import {InputField} from '../../components/InputField';
 import {StackActions, useNavigation} from '@react-navigation/native';
 import {X_Button} from '../../components/Button';
-import {Button} from 'react-native-elements';
+import {Button, CheckBox} from 'react-native-elements';
 import {Image} from 'react-native';
 import {styles} from './style';
 import {Icon} from 'react-native-elements/dist/icons/Icon';
@@ -30,6 +30,7 @@ import OneSignal from 'react-native-onesignal';
 interface LoginType {
   email: string;
   password: string;
+  keepMeSignedIn: boolean;
 }
 
 const loginValidationSchema = yup.object().shape({
@@ -51,10 +52,21 @@ const LoginPage: React.FC = () => {
   const handleLogin = async (values: LoginType, setErrors: any) => {
     try {
       const onesignalData = await OneSignal.getDeviceState();
-      const res = await mutate({...values, deviceId: onesignalData?.userId});
+      const res = await mutate({
+        email: values.email,
+        password: values.password,
+        deviceId: onesignalData?.userId,
+      });
       if (res.success) {
-        AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
-        dispatch(userSlice.actions.setUser(res.data.data.user));
+        if (values.keepMeSignedIn) {
+          AsyncStorage.setItem(ACCESS_TOKEN, res.data?.data?.token);
+        }
+        dispatch(
+          userSlice.actions.setUser({
+            ...res.data.data.user,
+            token: res.data?.data?.token,
+          }),
+        );
       } else {
         setErrors({
           email: 'Invalid Credentials',
@@ -88,13 +100,14 @@ const LoginPage: React.FC = () => {
                   alignItems: 'center',
                 }}>
                 <Image
+                  resizeMode="contain"
                   source={require('../../assets/images/LOGO.jpg')}
-                  style={[styles.image, {maxWidth: windowsWidth - 50}]}
+                  style={[styles.image, {maxWidth: windowsWidth - 75}]}
                 />
               </View>
               <Formik
                 validationSchema={loginValidationSchema}
-                initialValues={{email: '', password: ''}}
+                initialValues={{email: '', password: '', keepMeSignedIn: false}}
                 validateOnChange={true}
                 onSubmit={async (
                   values: LoginType,
@@ -169,7 +182,16 @@ const LoginPage: React.FC = () => {
                             : undefined
                         }
                       />
-                      {/* <CheckBox checked title="Keep me signed in" /> */}
+                      <CheckBox
+                        title="Keep Me Signed In"
+                        checked={values.keepMeSignedIn}
+                        onPress={() => {
+                          setFieldValue(
+                            'keepMeSignedIn',
+                            !values.keepMeSignedIn,
+                          );
+                        }}
+                      />
                       <View style={{marginVertical: 20}}>
                         <X_Button
                           onPress={handleSubmit}

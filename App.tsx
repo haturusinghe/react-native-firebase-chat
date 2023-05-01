@@ -13,6 +13,9 @@ import {Navigator} from './src/components/Navigator';
 import OneSignal from 'react-native-onesignal';
 // @ts-ignore
 import {ONESIGNAL_APP_ID} from '@env';
+import {injectStore} from './src/services/http';
+
+injectStore(store);
 
 // OneSignal Initialization
 OneSignal.setAppId(ONESIGNAL_APP_ID);

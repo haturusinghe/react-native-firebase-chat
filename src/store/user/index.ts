@@ -32,12 +32,14 @@ export interface User {
     address_line_1?: string;
     address_line_2?: string;
   };
+  token?: string;
 }
 
 export interface UserState {
   user: User | null;
   authenticated: null | boolean;
   loading: boolean;
+  token?: string;
 }
 
 const initialState: UserState = {
@@ -65,6 +67,7 @@ export const userSlice = createSlice({
     setUser: (state: UserState, action: PayloadAction<User | null>): void => {
       state.user = action.payload;
       state.authenticated = action.payload ? true : false;
+      state.token = action.payload?.token;
     },
   },
   extraReducers: builder => {

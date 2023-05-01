@@ -9,11 +9,16 @@ const http = axios.create({
   timeout: 30000 * 2,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let store: any;
+
+export const injectStore = (_store: any) => {
+  store = _store;
+};
+
 http.interceptors.request.use(async (config: any) => {
-  config.headers.authorization = `Bearer ${await AsyncStorage.getItem(
-    ACCESS_TOKEN,
-  )}`;
+  config.headers.authorization = `Bearer ${
+    store?.getState()?.user?.token || (await AsyncStorage.getItem(ACCESS_TOKEN))
+  }`;
   return config;
 });
 
