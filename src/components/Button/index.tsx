@@ -13,12 +13,12 @@ export const X_Button = (props: {
   fontSize?: number;
   fontFamily?: string;
   backgroundColor?: string;
+  fontWeight?: any;
 }) => {
   return (
     <View>
       <Button
         buttonStyle={{
-          borderRadius: 8,
           borderColor: props.color,
           borderWidth: props.borderWidth || 0,
           minHeight: 48,
@@ -27,11 +27,13 @@ export const X_Button = (props: {
           color: props.color,
           fontSize: props.fontSize || 14,
           fontFamily: props.fontFamily || 'Manrope-Regular',
+          fontWeight: props.fontWeight || 'normal',
         }}
         containerStyle={{
           minWidth: 150,
           minHeight: 48,
           backgroundColor: props.backgroundColor || colors.primary,
+          borderRadius: 5,
         }}
         icon={props.icon}
         title={props.title}

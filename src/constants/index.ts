@@ -1,5 +1,5 @@
 export const colors = {
-  primary: 'yellow',
+  primary: '#f6ea4a',
   primary_dark: '#D4AC0D',
   success: 'green',
   error: 'red',
@@ -68,6 +68,10 @@ export const API_ROUTES = {
   },
   OFFICE_BEARER: {
     GET_ALL: 'api/officeBearers',
+  },
+  NOTIFICATION: {
+    GET_MINE: 'api/notifications/mine',
+    UPDATE_NOTIFICATION_STATE: 'api/notifications/status',
   },
 };
 
