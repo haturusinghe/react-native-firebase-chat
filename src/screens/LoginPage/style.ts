@@ -21,4 +21,13 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 30,
   },
+  checkboxContainer: {
+    backgroundColor: 'white',
+    borderWidth: 0,
+  },
+  checkboxText: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: 'grey',
+  },
 });

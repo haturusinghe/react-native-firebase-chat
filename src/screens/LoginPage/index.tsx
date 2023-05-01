@@ -191,6 +191,10 @@ const LoginPage: React.FC = () => {
                             !values.keepMeSignedIn,
                           );
                         }}
+                        containerStyle={styles.checkboxContainer}
+                        textStyle={styles.checkboxText}
+                        uncheckedColor={colors.grey}
+                        checkedColor={colors.grey}
                       />
                       <View style={{marginVertical: 20}}>
                         <X_Button
