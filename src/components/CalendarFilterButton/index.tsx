@@ -58,14 +58,14 @@ export const CalendarFilterButton = ({
           name="calendar"
           type="font-awesome"
           size={18}
-          color={colors.white}
+          color={colors.black}
         />
         <Text style={styles.filterText}>{'Filter by Date  & Time'}</Text>
         <Icon
           name="caret-down"
           type="font-awesome"
           size={18}
-          color={colors.white}
+          color={colors.black}
         />
       </TouchableOpacity>
       {filter === FilterTypes.customDate && (

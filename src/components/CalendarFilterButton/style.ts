@@ -5,17 +5,18 @@ export const styles = StyleSheet.create({
   filterSelection: {
     flexDirection: 'row',
     paddingVertical: 10,
-    backgroundColor: colors.grey,
     marginLeft: 20,
     paddingHorizontal: 10,
-    borderRadius: 20,
+    borderRadius: 5,
     width: 200,
     marginVertical: 10,
+    borderWidth: 1,
+    borderColor: colors.grey,
   },
   filterText: {
     paddingHorizontal: 10,
-    color: colors.white,
-    fontWeight: '600',
+    color: colors.black,
+    fontWeight: 'bold',
   },
   FromDateView: {
     flexDirection: 'row',
