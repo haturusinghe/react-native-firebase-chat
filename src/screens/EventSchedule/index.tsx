@@ -11,7 +11,7 @@ export const EventSchedule = () => {
   const [index, setIndex] = React.useState<number>(0);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <MyHeader title="Event Schedule" />
+      <MyHeader title="Events" />
       <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
         <Tab.Item
           title="All Stories"
