@@ -4,7 +4,7 @@ export const colors = {
   success: 'green',
   error: 'red',
 
-  grey: 'grey',
+  grey: '#d1d1d6',
   white: 'white',
   black: 'black',
 };
