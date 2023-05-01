@@ -16,7 +16,7 @@ const HomeScreen = () => {
   const dispatch = useAppDispatch();
   return (
     <SafeAreaView style={styles.flex}>
-      <MyHeader title="Home" />
+      <MyHeader title="News" />
       <View style={styles.searchBar}>
         <InputField
           onChangeText={(e: any) => {
