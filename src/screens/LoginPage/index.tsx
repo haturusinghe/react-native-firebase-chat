@@ -90,7 +90,7 @@ const LoginPage: React.FC = () => {
           <View>
             <KeyboardAvoidingView
               style={{
-                paddingVertical: 40,
+                paddingTop: 40,
                 paddingHorizontal: 30,
                 borderRadius: 10,
                 // height: maskHeight,
@@ -145,6 +145,7 @@ const LoginPage: React.FC = () => {
                             ? errors.email
                             : undefined
                         }
+                        borderWidths={1}
                       />
                       <InputField
                         onChangeText={handleChange('password')}
@@ -181,6 +182,7 @@ const LoginPage: React.FC = () => {
                             ? errors.password
                             : undefined
                         }
+                        borderWidths={1}
                       />
                       <CheckBox
                         title="Keep Me Signed In"
@@ -196,14 +198,14 @@ const LoginPage: React.FC = () => {
                         uncheckedColor={colors.grey}
                         checkedColor={colors.grey}
                       />
-                      <View style={{marginVertical: 20}}>
+                      <View style={{marginTop: 75}}>
                         <X_Button
                           onPress={handleSubmit}
                           disabled={isSubmitting}
-                          title={'Sign in'}
-                          color={colors.grey}
-                          fontSize={14}
-                          borderWidth={1.5}
+                          title={'Login'}
+                          color={colors.black}
+                          fontSize={20}
+                          fontWeight="bold"
                         />
                       </View>
                     </View>

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
   },
   image: {
-    marginBottom: 40,
+    marginBottom: 75,
   },
   scrollview: {
     backgroundColor: colors.white,
@@ -15,11 +15,14 @@ export const styles = StyleSheet.create({
   forgotPassword: {
     fontSize: 14,
     textAlign: 'center',
+    marginTop: 20,
   },
   about: {
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
-    marginTop: 30,
+    marginTop: 50,
+    fontWeight: '400',
+    color: colors.grey,
   },
   checkboxContainer: {
     backgroundColor: 'white',
