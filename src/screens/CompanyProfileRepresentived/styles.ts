@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   },
   tabTitle: {
     color: colors.white,
+    textTransform: 'none',
   },
   tabBorder: {
     backgroundColor: colors.primary,

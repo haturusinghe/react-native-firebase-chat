@@ -19,7 +19,7 @@ export const EventSchedule = () => {
           titleStyle={styles.tabTitle}
         />
         <Tab.Item
-          title="Upcomming Events"
+          title="Upcoming Events"
           containerStyle={styles.tabContainer}
           titleStyle={styles.tabTitle}
         />
