@@ -16,6 +16,7 @@ const BottomTabs = () => {
       initialRouteName="News"
       screenOptions={({route}) => ({
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarIcon: ({focused, color, size}) => {
           let iconName: string = 'home';
           if (route.name === 'News') {
