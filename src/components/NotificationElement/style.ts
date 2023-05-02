@@ -36,4 +36,7 @@ export const styles = StyleSheet.create({
   flexEnd: {
     justifyContent: 'flex-end',
   },
+  avatar: {
+    backgroundColor: colors.primary_dark,
+  },
 });

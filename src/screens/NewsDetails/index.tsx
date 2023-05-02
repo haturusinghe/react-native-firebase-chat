@@ -1,7 +1,8 @@
+import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, useWindowDimensions, View} from 'react-native';
-import {Image, Text} from 'react-native-elements';
+import {Image, ScrollView, useWindowDimensions, View} from 'react-native';
+import {Text} from 'react-native-elements';
 import {LoadingType, LoadingWrapper} from '../../components/LoadingWrapper';
 import {MyHeader} from '../../components/MyHeader';
 import {API_ROUTES, HTTP_TYPES} from '../../constants';
@@ -12,8 +13,12 @@ import {News} from '../../store/news';
 import {styles} from './style';
 
 const NewsDetails = ({route}: any) => {
-  const {id, isFromNotification = false} = route.params;
+  const {id, isFromNotification = false, notificationId} = route.params;
   const {data: news} = useAppSelector(store => store.news);
+  const navigation = useNavigation();
+  const [imageUrl, setImageUrl] = useState(
+    {uri: news?.find(element => element._id === id)?.image} || undefined,
+  );
   const [newsdata, setNewsdata] = useState<News | null>(
     news?.find(element => element._id === id) || null,
   );
@@ -22,9 +27,22 @@ const NewsDetails = ({route}: any) => {
     url: API_ROUTES.NEWS.GET_BY_ID,
   });
 
+  const {mutate: updateNotificationState} = useMutation({
+    url: API_ROUTES.NOTIFICATION.UPDATE_NOTIFICATION_STATE,
+  });
+
   useEffect(() => {
     if (isFromNotification) {
       loadData();
+      if (notificationId) {
+        updateNotificationState(
+          {
+            notificationId,
+            viewed: true,
+          },
+          HTTP_TYPES.PUT,
+        );
+      }
     }
   }, []);
 
@@ -35,7 +53,22 @@ const NewsDetails = ({route}: any) => {
       {},
       API_ROUTES.NEWS.GET_BY_ID.replace(':id', id),
     );
-    setNewsdata(res.data.data);
+    if (res.success) {
+      setNewsdata({
+        _id: id,
+        title: res.data.data.title,
+        description: res.data.data.description,
+        attachments: res.data.data.attachments,
+        creator: res.data.data.creator,
+        createdAt: res.data.data.createdAt,
+      });
+      setImageUrl({uri: res.data.data.image});
+    } else {
+      console.log('Something went wrong');
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      }
+    }
   };
 
   return (
@@ -44,11 +77,9 @@ const NewsDetails = ({route}: any) => {
       <ScrollView>
         <LoadingWrapper loading={loading} type={LoadingType.PAGE_LOAD}>
           <>
-            {!!newsdata?.image && (
+            {imageUrl && imageUrl.uri && (
               <Image
-                source={{
-                  uri: newsdata.image,
-                }}
+                source={imageUrl}
                 style={[
                   styles.image,
                   {width: useWindowDimensions().width - 20},

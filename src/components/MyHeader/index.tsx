@@ -37,7 +37,7 @@ export const MyHeader = ({
         }
         centerComponent={<Text style={styles.title}>{title}</Text>}
         rightComponent={{
-          icon: 'message',
+          icon: 'menu',
           color: colors.black,
           onPress: chatPage,
         }}
