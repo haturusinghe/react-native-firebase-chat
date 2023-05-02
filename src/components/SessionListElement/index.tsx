@@ -97,10 +97,11 @@ export const SessionListElement = ({
               <Text style={styles.title}>No of Seats :</Text>
               {session.seats}
             </Text>
-          ) : session.seats - (session.acceptedCount || 0) > 0 ||
-            session.usersession.filter(
-              (usersession: UserSession) => usersession.user === user?._id,
-            )[0]?.status === sessionUserStatusType.accept ? (
+          ) : (session.seats - (session.acceptedCount || 0) > 0 ||
+              session.usersession.filter(
+                (usersession: UserSession) => usersession.user === user?._id,
+              )[0]?.status === sessionUserStatusType.accept) &&
+            !isPast ? (
             <View>
               <View style={[styles.SeatCard, styles.marginTop]}>
                 <Text style={styles.SubContentText}>
