@@ -25,8 +25,6 @@ export const NotificationElement = ({
 }: {
   notification: INotification;
 }) => {
-  console.log(notification.users);
-
   const navigation = useNavigation();
   const navigateProfilePage = () => {
     // TODO change the url and the data based on the notification Type(for now we only have one type)

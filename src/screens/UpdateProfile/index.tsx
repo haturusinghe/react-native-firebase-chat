@@ -31,6 +31,7 @@ import {MyHeader} from '../../components/MyHeader';
 import {withAuth} from '../../hoc/withAuth';
 import {CheckBox} from 'react-native-elements';
 import {launchImageLibrary} from 'react-native-image-picker';
+// @ts-ignore
 import {BASE_URL} from '@env';
 
 const updateProfileValidationSchema = yup.object().shape({
