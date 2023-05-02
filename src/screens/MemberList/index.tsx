@@ -51,7 +51,7 @@ export const MemberList = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <MyHeader title={route?.params?.title || 'title'} />
+      <MyHeader title={route?.params?.title} backenable={true} />
       <Tab value={index} onChange={setIndex} indicatorStyle={styles.tabBorder}>
         <Tab.Item
           title="Current"

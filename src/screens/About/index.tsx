@@ -8,7 +8,7 @@ import {styles} from './style';
 export const About = () => {
   return (
     <SafeAreaView>
-      <MyHeader title="About IFAWPCA" />
+      <MyHeader title="About IFAWPCA" backenable={true} />
       <ScrollView style={styles.container}>
         <View style={styles.marginTop}>
           <Text style={styles.subTitle}>Who we are?</Text>
