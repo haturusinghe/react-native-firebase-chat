@@ -27,6 +27,7 @@ import {BoardMemberList} from '../../screens/BoardMemberList';
 import {OfficeBearerList} from '../../screens/OfficeBearerList';
 import {createNavigationContainerRef} from '@react-navigation/native';
 import UpdateProfile from '../../screens/UpdateProfile';
+import ChatUI from '../../screens/ChatUI';
 
 const Stack = createNativeStackNavigator();
 
@@ -123,6 +124,11 @@ export const Navigator = () => {
           <Stack.Screen
             name={routes.chat}
             component={Chat}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name={routes.chatUI}
+            component={ChatUI}
             options={{headerShown: false}}
           />
           <Stack.Screen
