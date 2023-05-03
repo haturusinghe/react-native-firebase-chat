@@ -15,7 +15,7 @@ interface ChatUIProps {
   route: ChatUIRouteProp;
 }
 
-interface UserData {
+export interface UserData {
   _id: string;
   name: string;
   avatar: string;

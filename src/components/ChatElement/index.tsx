@@ -4,12 +4,7 @@ import {Image, TouchableOpacity, View} from 'react-native';
 import {Text} from 'react-native-elements';
 import {routes} from '../../constants';
 import {styles} from './style';
-
-interface UserData {
-  _id: string;
-  name: string;
-  avatar: string;
-}
+import {UserData} from '../../screens/ChatUI';
 
 export const ChatElement = ({
   round = true,
@@ -35,7 +30,6 @@ export const ChatElement = ({
   };
 
   const navigateSingleChatPage = () => {
-    console.log('** From ChatElement', participantUserData);
     navigation.dispatch({
       ...StackActions.push(routes.chatUI, {participantUserData}),
     });

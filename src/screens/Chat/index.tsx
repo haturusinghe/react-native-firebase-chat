@@ -6,6 +6,7 @@ import {MyHeader} from '../../components/MyHeader';
 import firestore from '@react-native-firebase/firestore';
 import {useState, useEffect} from 'react';
 import {useAppSelector} from '../../hooks/useRedux';
+import {UserData} from '../ChatUI';
 
 interface ChatData {
   id: string;
@@ -15,12 +16,6 @@ interface ChatData {
   lastMessageTime?: Date;
   users?: UserData[];
   userIds?: string[];
-}
-
-interface UserData {
-  _id: string;
-  name: string;
-  avatar: string;
 }
 
 export const Chat = () => {
@@ -74,7 +69,7 @@ export const Chat = () => {
         };
       });
 
-      console.log('chatsData', chatsData);
+      // console.log('chatsData', chatsData);
       setChats(chatsData);
     });
     return () => unsubscribe();
