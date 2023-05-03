@@ -22,6 +22,7 @@ export const routes = {
   about: 'About',
   companyProfile: 'Company_Profile',
   chat: 'chat',
+  chatUI: 'chat_UI', 
   storyDetails: 'story_Details',
   eventMenu: 'eventMenu',
   sponsorList: 'sponsorList',
