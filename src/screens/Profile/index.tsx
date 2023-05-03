@@ -1,12 +1,32 @@
 import * as React from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, ScrollView, TouchableOpacity, View} from 'react-native';
 import {Icon, Image, Text} from 'react-native-elements';
 import {MyHeader} from '../../components/MyHeader';
-import {colors} from '../../constants';
+import {colors, routes} from '../../constants';
 import {styles} from './style';
+
+import {UserData} from '../ChatUI';
+import {StackActions, useNavigation} from '@react-navigation/native';
 
 export const Profile = ({route}: any) => {
   const {user} = route.params;
+
+  const navigation = useNavigation();
+  //create participant user data object
+  const participantUserData: UserData = {
+    _id: user._id || 'no-id',
+    name: user.name || 'No Name',
+    avatar:
+      user.imageUrl ||
+      'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+  };
+
+  const navigateSingleChatPage = () => {
+    console.log('** From ChatElement', participantUserData);
+    navigation.dispatch({
+      ...StackActions.push(routes.chatUI, {participantUserData}),
+    });
+  };
 
   return (
     <SafeAreaView>
@@ -31,6 +51,9 @@ export const Profile = ({route}: any) => {
             <Text style={[styles.text, , styles.textAlignCenter]}>
               Board Member
             </Text>
+            <TouchableOpacity onPress={navigateSingleChatPage}>
+              <Text style={[styles.textAlignCenter]}>{'Send Chat'}</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.marginTop}>
