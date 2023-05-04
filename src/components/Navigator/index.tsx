@@ -28,6 +28,7 @@ import {OfficeBearerList} from '../../screens/OfficeBearerList';
 import {createNavigationContainerRef} from '@react-navigation/native';
 import UpdateProfile from '../../screens/UpdateProfile';
 import {ChatUI} from '../../screens/ChatUI';
+import {ChatUILazyLoading} from '../../screens/ChatUILazyLoading';
 
 const Stack = createNativeStackNavigator();
 
@@ -128,7 +129,7 @@ export const Navigator = () => {
           />
           <Stack.Screen
             name={routes.chatUI}
-            component={ChatUI}
+            component={ChatUILazyLoading}
             options={{headerShown: false}}
           />
           <Stack.Screen
