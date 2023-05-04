@@ -7,7 +7,9 @@ import firestore from '@react-native-firebase/firestore';
 import {useState, useEffect} from 'react';
 import {useAppSelector} from '../../hooks/useRedux';
 import {UserData} from '../ChatUI';
-
+import {Text} from 'react-native-elements';
+import {Image, TouchableOpacity, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 interface ChatData {
   id: string;
   name?: string;
@@ -95,14 +97,38 @@ export const Chat = () => {
             />
           ))
         ) : (
-          <ChatCard
-            recipientName={'No name'}
-            lastMessage={'No message'}
-            lastMessageTime={''}
-            _id={'no-id'}
-          />
+          <EmptyChatList />
         )}
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+/* <ChatCard
+            recipientName={'No name'}
+            lastMessage={'No message'}
+            lastMessageTime={''}
+            _id={'no-id'}
+          /> */
+
+const EmptyChatList = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>
+        No chats available, Go start a new conversation
+      </Text>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
